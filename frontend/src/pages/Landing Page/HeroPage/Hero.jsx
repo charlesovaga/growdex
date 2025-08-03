@@ -23,7 +23,7 @@ export default function HeroSection({placeholder = "Enter your email"}) {
     setLoading(true)
     setMessage(null)
     try {
-      await axios.post('http://localhost:5000/api/join-waitlist', { email, firstName })
+      await axios.post("https://growdex-l2j0.onrender.com/api/join-waitlist", { email, firstName })
       setMessage('🎉 You’ve joined the waitlist!')
       setEmail('')
       setFirstName('')
