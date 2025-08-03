@@ -1,19 +1,19 @@
 // import React, { useState } from "react";
-import Hero from "../HeroPage/Hero";
-import Nav from "../HeroPage/Nav";
+import Hero from "./Hero.jsx";
+import Nav from "./Nav.jsx";
 // import BottomLogos from "../HeroPage/BottomLogos";
 // import IncreaseProductivity from "../HeroPage/IncreaseProductivity"
 // import WhyWeUseAzonto from "../HeroPage/WhyWeUseAzonto";
 // import SpinningAzonto from "../HeroPage/SpinningAzonto";
-import DashboardLayer from "../HeroPage/DashboardLayer";
-import OurUserKindWords from "../HeroPage/OurUserKindWords.jsx";
-import MovingCards from "../HeroPage/MovingCards";
-import FrequentlyAskedQuestions from "../HeroPage/FrequentlyAskedQuestions";
+import DashboardLayer from "./DashboardLayer.jsx";
+import OurUserKindWords from "./OurUserKindWords.jsx";
+import MovingCards from "./MovingCards.jsx";
+import FrequentlyAskedQuestions from "./FrequentlyAskedQuestions.jsx";
 // import WhyWeUseAzontoReverse from "../HeroPage/WhyWeUseAzontoReverse";
-import Integrations from "../HeroPage/Integrations"
+import Integrations from "./Integrations.jsx"
 import { useState } from "react";
-import Banner from "../HeroPage/Banner";
-import Footer from "../HeroPage/Footer";
+import Banner from "./Banner.jsx";
+import Footer from "./Footer.jsx";
 // import Property from "../../../Assets/Property 1=Hero 19 1.png";
 
 const LandingPage = () => {

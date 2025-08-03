@@ -4,10 +4,10 @@
 import React from "react";
 // import Azonto_Logo from "../../../Assets/Azonto_logo.png";
 import { Link } from "react-router-dom";
-import frame3 from "../../../Assets/Frame 2.png"
-import frame2 from "../../../Assets/prime_twitter.png"
-import frame5 from "../../../Assets/Frame 5.png"
-import frame4 from "../../../Assets/Logo Instagram Png.jpg"
+import frame3 from "../../../assets/Frame 2.png"
+import frame2 from "../../../assets/prime_twitter.png"
+import frame5 from "../../../assets/Frame 5.png"
+import frame4 from "../../../assets/Logo Instagram Png.jpg"
 import logo from "../../../assets/Frame 1686560934.png"
 
 export default function Footer() {
