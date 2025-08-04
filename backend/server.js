@@ -7,7 +7,7 @@ dotenv.config();
 
 const app = express();
 app.use(cors({
-  origin: 'https://growdex.netlify.app/',
+  origin: 'https://growdex.netlify.app',
   methods: ['POST', 'GET'],
   credentials: true
 }));
