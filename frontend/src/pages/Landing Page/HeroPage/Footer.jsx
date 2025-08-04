@@ -57,12 +57,12 @@ React.useEffect(() => {
 </div>
 
   {/* Mobile: Single line */}
-  <p className="text-gray-600 text-sm  mt-6 block md:hidden">
+  {/* <p className="text-gray-600 text-sm  mt-6 block md:hidden">
     Transaction life-cycle management solution for your business.
-  </p>
+  </p> */}
 
   {/* Desktop: With line breaks */}
-  <p className="text-gray-600 text-xs mt-2 hidden md:block">
+  <p className="text-gray-600 text-xs mt-2">
   Connect and manage your campaigns <br /> across all major social and ad platforms, <br /> seamlessly, powerfully, and in one place
   </p>
 
