@@ -144,7 +144,7 @@ export default function HeroSection({placeholder = "Enter your email"}) {
       setEmail('')
       setFirstName('')
     } catch (err) {
-      setMessage('❌ Failed to join. Try again.')
+      setMessage(`❌ Failed to join: ${err.response?.data?.message || "Try again."}`);
     } finally {
       setLoading(false)
     }
@@ -165,18 +165,19 @@ export default function HeroSection({placeholder = "Enter your email"}) {
 
         {/* Headline */}
         <h1 className="text-4xl md:text-5xl font-extrabold text-gray-900 mb-4 leading-tight">
-          Get things done by awesome <br className="hidden md:block" />
-          remote team
+        Run Smarter Ads Across All Platforms — From One Dashboard.
         </h1>
 
         {/* Subheading */}
         <p className="text-lg text-gray-500 mb-8">
-          We share common trends and strategies for improving your rental income and
-          making sure you stay in high demand.
+        No more switching between Meta, Google, TikTok, Twitter, or Email tools. <br />
+With Growdex, create, launch, and track all your digital campaigns from one place, automatically.
+
         </p>
 
         {/* Waitlist Form */}
-        <form  onSubmit={handleJoin}  className="flex flex-col md:flex-row items-center justify-center gap-4 md:gap-2">
+        <form onSubmit={handleJoin} className="relative z-10 flex flex-col md:flex-row items-center justify-center gap-4 md:gap-2">
+
       
         <input
           type="text"

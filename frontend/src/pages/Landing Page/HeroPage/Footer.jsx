@@ -107,26 +107,59 @@ React.useEffect(() => {
       </ul>
     </div>
 
-    {/*Follow us */}
-    <div>
-      <h4 className="font-semibold mb-4 text-black text-xl">Follow Us</h4>
-      <ul className="space-y-3 text-sm text-gray-600">
-      <div className="flex justify-start xl:justify-start mt-2 md:mt-4 space-x-6">
-  <a href="https://www.facebook.com/share/15LvScWKn7/?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer">
-    <img src={frame3} alt="Facebook" className="w-4 h-4" />
-  </a>
-  <a href="https://x.com/growdexhq?s=21" target="_blank" rel="noopener noreferrer">
-    <img src={frame2} alt="Twitter/X" className="w-4 h-4" />
-  </a>
-  <a href="https://www.linkedin.com/company/growdexhq/" target="_blank" rel="noopener noreferrer">
-    <img src={frame5} alt="LinkedIn" className="w-4 h-4" />
-  </a>
-  <a href="https://www.instagram.com/growdexhq/" target="_blank" rel="noopener noreferrer">
-    <img src={frame4} alt="Instagram" className="w-4 h-4" />
-  </a>
-</div>
-      </ul>
+   {/* Follow us */}
+<div>
+  <h4 className="font-semibold mb-4 text-black text-xl md:text-xl">Follow Us</h4>
+  <ul className="space-y-3 text-sm text-gray-600">
+    <div className="flex justify-start xl:justify-start mt-2 md:mt-4 space-x-12 md:space-x-6">
+      <a
+        href="https://www.facebook.com/share/15LvScWKn7/?mibextid=wwXIfr"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <img
+          src={frame3}
+          alt="Facebook"
+          className="w-7 h-7 md:w-4 md:h-4"
+        />
+      </a>
+      <a
+        href="https://x.com/growdexhq?s=21"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <img
+          src={frame2}
+          alt="Twitter/X"
+          className="w-7 h-7 md:w-4 md:h-4"
+        />
+      </a>
+      <a
+        href="https://www.linkedin.com/company/growdexhq/"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <img
+          src={frame5}
+          alt="LinkedIn"
+          className="w-7 h-7 md:w-4 md:h-4"
+        />
+      </a>
+      <a
+        href="https://www.instagram.com/growdexhq/"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <img
+          src={frame4}
+          alt="Instagram"
+          className="w-7 h-7 md:w-4 md:h-4"
+        />
+      </a>
     </div>
+  </ul>
+</div>
+
   </div>
   
 
@@ -146,18 +179,20 @@ React.useEffect(() => {
 {/* Bottom Bar */}
 <div className="border-t border-gray-300 py-6 mt-4 md:px-8">
   <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-start text-sm text-gray-500 gap-4">
-  <div className="flex flex-col md:flex-row items-start md:items-center md:space-x-4 space-y-2 md:space-y-0">
-  <button onClick={() => setOpenModal("privacy")} className="hover:text-black text-black font-semibold text-md">
+  <div className="flex flex-row items-center flex-wrap gap-x-2 gap-y-2">
+  <button onClick={() => setOpenModal("privacy")} className="hover:text-black text-black font-semibold text-xs">
     Privacy Policy
   </button>
-  <span className="text-gray-800 hidden md:inline">|</span>
+  {/* <span className="text-gray-800 hidden md:inline">|</span> */}
+  <span className="text-gray-800 md:inline">|</span>
 
-  <button onClick={() => setOpenModal("terms")} className="hover:text-black text-black font-semibold text-md">
+  <button onClick={() => setOpenModal("terms")} className="hover:text-black text-black font-semibold text-xs">
     Terms & Conditions
   </button>
-  <span className="text-gray-800 hidden md:inline">|</span>
+  {/* <span className="text-gray-800 hidden md:inline">|</span> */}
+  <span className="text-gray-800 md:inline">|</span>
 
-  <button onClick={() => setOpenModal("cookie")} className="hover:text-black text-black font-semibold text-md">
+  <button onClick={() => setOpenModal("cookie")} className="hover:text-black text-black font-semibold text-xs">
     Cookie Policy
   </button>
 </div>

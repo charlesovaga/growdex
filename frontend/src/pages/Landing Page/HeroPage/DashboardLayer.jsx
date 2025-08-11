@@ -122,14 +122,16 @@ export default function FeaturesGrid() {
         <span className="absolute w-4 h-4 bg-white border-2 border-gray-300 rounded-full -bottom-2 -left-2"></span>
         <span className="absolute w-4 h-4 bg-white border-2 border-gray-300 rounded-full -bottom-2 -right-2"></span>
 
-        {/* Center joint circle */}
-        <span className="absolute w-4 h-4 bg-white border-2 border-gray-300 rounded-full top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10"></span>
+    {/* Center joint circle */}
+    <span className="hidden md:block absolute w-4 h-4 bg-white border-2 border-gray-300 rounded-full top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10"></span>
+
+
 
         {/* Middle dotted lines */}
         <span className="absolute top-1/2 left-0 w-full border-t- border-dotted border-gray-300"></span>
         <span className="absolute left-1/2 top-0 h-full border-l- border-dotted border-gray-300"></span>
 
-        {/* Grid content */}
+        {/* Grid content
         <div className="grid grid-cols-1 md:grid-cols-2">
           {features.map((feature, idx) => (
             <div
@@ -139,12 +141,35 @@ export default function FeaturesGrid() {
                 ${idx % 2 === 0 ? "border-r-2 border-dotted border-gray-300" : ""}
               `}
             >
+
+              
               <div className="text-5xl mb-4">{feature.icon}</div>
               <h3 className="text-xl font-semibold mb-2">{feature.title}</h3>
               <p className="text-gray-500 text-sm">{feature.description}</p>
             </div>
           ))}
-        </div>
+        </div> */}
+
+<div className="grid grid-cols-1 md:grid-cols-2">
+  {features.map((feature, idx) => (
+    <div
+      key={idx}
+      className={`p-10 flex flex-col items-center text-center transition
+        border-b-2 border-dotted border-gray-300        /* bottom border on mobile */
+        md:border-b-2                                 /* remove bottom border on md+ */
+        md:border-r-2                                 /* right border on md+ */
+        ${idx % 2 !== 0 ? "md:border-r-0" : ""}       /* remove right border for right column */
+        ${idx >= features.length - 2 ? "md:border-b-2" : ""} /* bottom border for last row on md+ */
+        ${idx === features.length - 1 ? "border-b-0" : ""} /* remove bottom border for last item on mobile */
+      `}
+    >
+      <div className="text-5xl mb-4">{feature.icon}</div>
+      <h3 className="text-xl font-semibold mb-2">{feature.title}</h3>
+      <p className="text-gray-500 text-sm">{feature.description}</p>
+    </div>
+  ))}
+</div>
+
       </div>
     </section>
   );
