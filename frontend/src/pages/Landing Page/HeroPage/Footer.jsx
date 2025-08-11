@@ -4,10 +4,10 @@
 import React from "react";
 // import Azonto_Logo from "../../../Assets/Azonto_logo.png";
 import { Link } from "react-router-dom";
-import frame3 from "../../../assets/Frame 2.png"
-import frame2 from "../../../assets/prime_twitter.png"
-import frame5 from "../../../assets/Frame 5.png"
-import frame4 from "../../../assets/Logo Instagram Png.jpg"
+import frame3 from "../../../assets/gg_facebook.png"
+import frame2 from "../../../assets/prime_twitter (1).png"
+import frame5 from "../../../assets/ri_linkedin-fill.png"
+import frame4 from "../../../assets/mingcute_instagram-fill.png"
 import logo from "../../../assets/Frame 1686560934.png"
 
 export default function Footer() {
@@ -42,7 +42,7 @@ React.useEffect(() => {
 
      <footer className="bg-white  text-gray-700 max-w-7xl mx-auto">
 
-     <div className="pt-10 xl:pt-16 px-6 xl:ml-8 flex flex-col xl:flex-row justify-between items-start w-full gap-3 xl:gap-120">
+     <div className="pt-10 xl:pt-16 px-6 xl:ml-8 flex flex-col xl:flex-row justify-between items-start w-full gap-3 xl:gap-70">
 
   {/* Logo & Description */}
  {/* Logo & Description */}
@@ -77,7 +77,7 @@ React.useEffect(() => {
 
   {/* Link Sections */}
   <div className="flex flex-col xl:flex-col flex-1 gap-6">
-  <div className="grid grid-cols-1 xl:grid-cols-3 gap-10 md:gap-14">
+  <div className="grid grid-cols-1 xl:grid-cols-4 gap-10 md:gap-4">
     {/* Product */}
     <div>
       <h4 className="font-semibold mb-4 text-black text-xl">Product</h4>
@@ -106,23 +106,31 @@ React.useEffect(() => {
         <li>FAQ</li>
       </ul>
     </div>
+
+    {/*Follow us */}
+    <div>
+      <h4 className="font-semibold mb-4 text-black text-xl">Follow Us</h4>
+      <ul className="space-y-3 text-sm text-gray-600">
+      <div className="flex justify-start xl:justify-start mt-2 md:mt-4 space-x-6">
+  <a href="https://www.facebook.com/share/15LvScWKn7/?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer">
+    <img src={frame3} alt="Facebook" className="w-4 h-4" />
+  </a>
+  <a href="https://x.com/growdexhq?s=21" target="_blank" rel="noopener noreferrer">
+    <img src={frame2} alt="Twitter/X" className="w-4 h-4" />
+  </a>
+  <a href="https://www.linkedin.com/company/growdexhq/" target="_blank" rel="noopener noreferrer">
+    <img src={frame5} alt="LinkedIn" className="w-4 h-4" />
+  </a>
+  <a href="https://www.instagram.com/growdexhq/" target="_blank" rel="noopener noreferrer">
+    <img src={frame4} alt="Instagram" className="w-4 h-4" />
+  </a>
+</div>
+      </ul>
+    </div>
   </div>
   
 
-  <div className="flex justify-start xl:justify-center mt-14 space-x-6">
-  <a href="https://www.facebook.com/share/15LvScWKn7/?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer">
-    <img src={frame3} alt="Facebook" className="w-6 h-6" />
-  </a>
-  <a href="https://x.com/growdexhq?s=21" target="_blank" rel="noopener noreferrer">
-    <img src={frame2} alt="Twitter/X" className="w-6 h-6" />
-  </a>
-  <a href="https://www.linkedin.com/company/growdexhq/" target="_blank" rel="noopener noreferrer">
-    <img src={frame5} alt="LinkedIn" className="w-6 h-6" />
-  </a>
-  <a href="https://www.instagram.com/growdexhq/" target="_blank" rel="noopener noreferrer">
-    <img src={frame4} alt="Instagram" className="w-6 h-6" />
-  </a>
-</div>
+ 
 
 
  

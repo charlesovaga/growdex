@@ -43,7 +43,7 @@ function FaqItem({ question, answer, isOpen, onClick }) {
       }`}
     >
      <div className="flex justify-between items-start cursor-pointer mt-4 mb-10" onClick={onClick}>
-  <h3 className={`text-3xl font-bold ${isOpen ? "text-gray-900 font-bold" : "text-black"}`}>
+  <h3 className={`text-2xl font-bold ${isOpen ? "text-gray-900 font-bold" : "text-black"}`}>
     {question}
   </h3>
   <div className="ml-4 mt-1 text-3xl text-gray-500">
@@ -53,7 +53,7 @@ function FaqItem({ question, answer, isOpen, onClick }) {
 
 
       {isOpen && (
-        <div className="mt-18 text-xl text-gray-500 leading-relaxed">
+        <div className="mt-18 text-md text-gray-500 leading-relaxed">
           {answer}
         </div>
       )}

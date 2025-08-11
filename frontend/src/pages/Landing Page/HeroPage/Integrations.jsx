@@ -83,7 +83,7 @@ export default function IntegrationsSection() {
         Integrate with <br /> multiple platforms
       </h2>
       <p className="text-gray-500 max-w-xl mx-auto relative z-10">
-        Use disruptive agentic integrations across all of the leading social platforms on the Internet.
+        Integrate with all the leading social platforms across the internet
       </p>
     </section>
   );
