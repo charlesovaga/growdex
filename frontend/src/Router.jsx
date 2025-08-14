@@ -1,5 +1,6 @@
 import React from 'react'
 import LandingPage from "./pages/Landing Page/HeroPage/index.jsx";
+import AdminPosts from './components/pages/Admin/AdminPosts.jsx';
 // import ShopPage from "./pages/Landing Page/NavbarPage/Shop/Shop.jsx"
 // import Pricing from "./pages/Landing Page/Navbar Page/Pricing/index.jsx"
 // import IntegrationPage from "./pages/Landing Page/Navbar Page/Integration/index.jsx"
@@ -18,6 +19,7 @@ function Router() {
   return (
    <Routes>
     <Route path="/" element={<LandingPage />} />
+    <Route path="/admin" element={<AdminPosts />} />
     {/* <Route path="/pricing-plan" element={<Pricing />} />
     <Route path="/integration" element={<IntegrationPage />} />
     <Route path="/company" element={<CompanyPage />} />
