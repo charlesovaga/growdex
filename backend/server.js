@@ -1,9 +1,13 @@
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
+import morgan from "morgan";
+import connectDB from "./config/db.js";
 import joinWaitlistRoute from "./routes/joinWaitlist.js";
+import postRoutes from "./routes/postRoutes.js";
 
 dotenv.config();
+connectDB();
 
 const app = express();
 app.use(cors({
@@ -12,6 +16,8 @@ app.use(cors({
   credentials: true
 }));
 app.use(express.json());
+app.use(morgan("dev"));
+app.use("/api/posts", postRoutes);
 
 // ✅ Root route for Render testing
 app.get("/", (req, res) => {
