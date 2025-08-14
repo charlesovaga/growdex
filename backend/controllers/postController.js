@@ -374,46 +374,44 @@ export const getPost = async (req, res) => {
 
 // @desc Create post with featuredImage & multiple images
 export const createPost = async (req, res) => {
-  try {
-    const errors = validatePost(req.body);
-    if (errors.length) return res.status(400).json({ message: errors.join(", ") });
-
-    let featuredImageUrl = null;
-    let featuredImagePublicId = null;
-    const imagesArray = [];
-
-    // Single featured image
-    if (req.files?.featuredImage) {
-      const result = await cloudinary.uploader.upload(req.files.featuredImage[0].path, { folder: "blog_posts" });
-      featuredImageUrl = result.secure_url;
-      featuredImagePublicId = result.public_id;
-    }
-
-    // Multiple images
-    if (req.files?.images) {
-      for (let file of req.files.images) {
-        const result = await cloudinary.uploader.upload(file.path, { folder: "blog_posts" });
-        imagesArray.push({ url: result.secure_url, publicId: result.public_id });
+    try {
+      const errors = validatePost(req.body);
+      if (errors.length) return res.status(400).json({ message: errors.join(", ") });
+  
+      let featuredImageObj = null;
+      const imagesArray = [];
+  
+      // Single featured image
+      if (req.files?.featuredImage) {
+        const result = await cloudinary.uploader.upload(req.files.featuredImage[0].path, { folder: "blog_posts" });
+        featuredImageObj = { url: result.secure_url, publicId: result.public_id };
       }
+  
+      // Multiple images
+      if (req.files?.images) {
+        for (let file of req.files.images) {
+          const result = await cloudinary.uploader.upload(file.path, { folder: "blog_posts" });
+          imagesArray.push({ url: result.secure_url, publicId: result.public_id });
+        }
+      }
+  
+      const post = new Post({
+        title: req.body.title,
+        body: req.body.body,
+        author: req.body.author,
+        tags: req.body.tags ? req.body.tags.split(",") : [],
+        slug: req.body.slug,
+        featuredImage: featuredImageObj,
+        images: imagesArray,
+      });
+  
+      await post.save();
+      res.status(201).json(post);
+    } catch (err) {
+      res.status(400).json({ message: err.message });
     }
-
-    const post = new Post({
-      title: req.body.title,
-      body: req.body.body,
-      author: req.body.author,
-      tags: req.body.tags ? req.body.tags.split(",") : [],
-      slug: req.body.slug,
-      featuredImage: featuredImageUrl,
-      featuredImagePublicId,
-      images: imagesArray,
-    });
-
-    await post.save();
-    res.status(201).json(post);
-  } catch (err) {
-    res.status(400).json({ message: err.message });
-  }
-};
+  };
+  
 
 // @desc Update post
 // export const updatePost = async (req, res) => {
@@ -509,23 +507,47 @@ export const updatePost = async (req, res) => {
   
 
 // @desc Delete post and all images
+// export const deletePost = async (req, res) => {
+//   try {
+//     const post = await Post.findOneAndDelete({ slug: req.params.slug });
+//     if (!post) return res.status(404).json({ message: "Post not found" });
+
+//     // Delete featured image
+//     if (post.featuredImagePublicId) await cloudinary.uploader.destroy(post.featuredImagePublicId);
+
+//     // Delete multiple images
+//     if (post.images && post.images.length > 0) {
+//       for (let img of post.images) {
+//         await cloudinary.uploader.destroy(img.publicId);
+//       }
+//     }
+
+//     res.json({ message: "Post deleted" });
+//   } catch (err) {
+//     res.status(500).json({ message: err.message });
+//   }
+// };
+// @desc Delete post and all images
 export const deletePost = async (req, res) => {
-  try {
-    const post = await Post.findOneAndDelete({ slug: req.params.slug });
-    if (!post) return res.status(404).json({ message: "Post not found" });
-
-    // Delete featured image
-    if (post.featuredImagePublicId) await cloudinary.uploader.destroy(post.featuredImagePublicId);
-
-    // Delete multiple images
-    if (post.images && post.images.length > 0) {
-      for (let img of post.images) {
-        await cloudinary.uploader.destroy(img.publicId);
+    try {
+      const post = await Post.findOneAndDelete({ slug: req.params.slug });
+      if (!post) return res.status(404).json({ message: "Post not found" });
+  
+      // Delete featured image
+      if (post.featuredImage?.publicId) {
+        await cloudinary.uploader.destroy(post.featuredImage.publicId);
       }
+  
+      // Delete multiple images
+      if (post.images && post.images.length > 0) {
+        for (let img of post.images) {
+          await cloudinary.uploader.destroy(img.publicId);
+        }
+      }
+  
+      res.json({ message: "Post deleted" });
+    } catch (err) {
+      res.status(500).json({ message: err.message });
     }
-
-    res.json({ message: "Post deleted" });
-  } catch (err) {
-    res.status(500).json({ message: err.message });
-  }
-};
+  };
+  

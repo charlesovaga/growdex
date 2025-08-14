@@ -48,7 +48,7 @@ const postSchema = new mongoose.Schema(
     },
   },
   { timestamps: true }
-);
+);-
 
 // Auto-generate slug before saving
 postSchema.pre("save", function (next) {
