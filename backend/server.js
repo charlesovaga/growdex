@@ -1,26 +1,31 @@
-import express from "express";
-import cors from "cors";
-import dotenv from "dotenv";
-import morgan from "morgan";
-import connectDB from "./config/db.js";
-import joinWaitlistRoute from "./routes/joinWaitlist.js";
-import postRoutes from "./routes/postRoutes.js";
+import 'dotenv/config';
+import express from 'express';
+import cors from 'cors';
+import helmet from 'helmet';
+import morgan from 'morgan';
+import rateLimit from 'express-rate-limit';
+import cookieParser from 'cookie-parser';
+import connectDB from './config/db.js';
+// import passport from './config/passport.js'; // register strategies
 
-dotenv.config();
-connectDB();
+// Routes
+// import authRoutes from './routes/authRoutes.js';
+import postRoutes from './routes/postRoutes.js';
+import joinWaitlistRoute from './routes/joinWaitlist.js';
+import adminRoutes from "./routes/adminBlog.js"; 
 
 const app = express();
+connectDB();
 
-// Define allowed origins
+// Allowed origins
 const allowedOrigins = [
   "https://growdex.netlify.app", // production
-  "http://localhost:5173"         // development
+  "http://localhost:5173"        // development
 ];
 
-// CORS configuration
+// Middleware
 app.use(cors({
   origin: function (origin, callback) {
-    // allow requests with no origin (like Postman or mobile apps)
     if (!origin) return callback(null, true);
     if (allowedOrigins.includes(origin)) {
       return callback(null, true);
@@ -31,20 +36,20 @@ app.use(cors({
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   credentials: true
 }));
-
+app.use(helmet());
+app.use(cookieParser());
+app.use(rateLimit({ windowMs: 60_000, max: 200 }));
 app.use(express.json());
 app.use(morgan("dev"));
 
 // Routes
-app.use("/api/posts", postRoutes);
-app.use("/api", joinWaitlistRoute);
+// app.use('/auth', authRoutes);
+app.use('/api/posts', postRoutes);
+app.use('/api', joinWaitlistRoute);
+app.use("/api/admin", adminRoutes);
+// Test route
+app.get('/', (req, res) => res.send('Growdex API is running'));
 
-// Root route for testing
-app.get("/", (req, res) => {
-  res.send("Growdex API is running");
-});
-
+// Server listen
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
-});
+app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));

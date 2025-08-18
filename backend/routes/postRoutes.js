@@ -25,16 +25,13 @@ import {
   getPost,
   createPost,
   updatePost,
-  deletePost
+  deletePost,
+  getPublicPosts
 } from "../controllers/postController.js";
 
 const router = express.Router();
 
-// Get all posts
-router.get("/", getPosts);
 
-// Get single post
-router.get("/:slug", getPost);
 
 // Create new post (with featuredImage + multiple images)
 router.post("/", uploadPostImages, createPost);
@@ -44,5 +41,14 @@ router.put("/:slug", uploadPostImages, updatePost);
 
 // Delete post (also removes images from Cloudinary)
 router.delete("/:slug", deletePost);
+
+// Public endpoint: latest 10 posts
+router.get("/public", getPublicPosts);
+
+// Get all posts
+router.get("/", getPosts);
+
+// Get single post
+router.get("/:slug", getPost);
 
 export default router;

@@ -550,4 +550,16 @@ export const deletePost = async (req, res) => {
       res.status(500).json({ message: err.message });
     }
   };
+
+  // controllers/postController.js
+export const getPublicPosts = async (req, res) => {
+    try {
+      const posts = await Post.find({})
+        .sort({ createdAt: -1 }) // newest first
+        .limit(10);             // show top 10 posts
+      res.json(posts);
+    } catch (err) {
+      res.status(500).json({ message: err.message });
+    }
+  };
   
