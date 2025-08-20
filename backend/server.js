@@ -13,13 +13,15 @@ import connectDB from './config/db.js';
 import postRoutes from './routes/postRoutes.js';
 import joinWaitlistRoute from './routes/joinWaitlist.js';
 import adminRoutes from "./routes/adminBlog.js"; 
+import adminBlogRoutes from "./routes/adminBlogAnalytics.js"; 
+import trackRoutes from "./routes/adminBlogTrack.js";
 
 const app = express();
 connectDB();
 
 // Allowed origins
 const allowedOrigins = [
-  "https://growdex.netlify.app", // production
+  'https://growdex.ai', // production
   "http://localhost:5173"        // development
 ];
 
@@ -47,6 +49,8 @@ app.use(morgan("dev"));
 app.use('/api/posts', postRoutes);
 app.use('/api', joinWaitlistRoute);
 app.use("/api/admin", adminRoutes);
+app.use("/api/admin-dashboard", adminBlogRoutes);
+app.use("/api/track", trackRoutes);
 // Test route
 app.get('/', (req, res) => res.send('Growdex API is running'));
 
