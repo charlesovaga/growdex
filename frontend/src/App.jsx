@@ -1,8 +1,18 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import AppRouter from "./Router.jsx";
 import { Toaster } from "react-hot-toast";
+import Loader from "./components/loader/Loader.jsx";
+import { bootstrapAuth } from "./utils/bootstrapAuth.js";
 
 function App() {
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    bootstrapAuth().finally(() => setLoading(false));
+  }, []);
+
+  if (loading) return <Loader/>;
+
   return (
     <div>
       <AppRouter />

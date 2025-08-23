@@ -11,6 +11,8 @@ const BlogDetail = () => {
   const { slug } = useParams();
   const [post, setPost] = useState(null);
 
+
+  
   useEffect(() => {
     const trackView = async () => {
       try {

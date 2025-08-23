@@ -332,7 +332,17 @@ const fetchPosts = async (pageNumber = 1) => {
             {/* Grid posts */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
   {gridPosts.map((post) => (
-    <Link key={post._id} to={`/blog/${post.slug}`} className="rounded p-4 shadow-xs hover:shadow-lg transition relative">
+    <Link key={post._id} to={`/blog/${post.slug}`} className="rounded p-4 shadow-xs hover:shadow-lg transition relative"
+        onClick={async () => {
+    try {
+      await axiosInstance.post("/track/click", {
+        page: `/blog/${post.slug}`,
+        deviceType: /Mobi|Android/i.test(navigator.userAgent) ? "mobile" : "web",
+      });
+    } catch (err) {
+      console.error("Error tracking click", err);
+    }
+  }}>
                   {post.featuredImage?.url && (
                     <div className="w-full aspect-[3/2]">
                       <img src={post.featuredImage.url} alt={post.title} className="w-full h-full object-cover object-top rounded-t-lg" />

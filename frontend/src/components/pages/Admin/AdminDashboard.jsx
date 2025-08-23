@@ -378,12 +378,14 @@ import logo from "../../../assets/Frame 12.png"
 import notifications from "../../../assets/admin-comments.png"
 import cross from "../../../assets/dashicons-plus.png"
 import iconHome from "../../../assets/Icon (3).png"
+import { logout as logoutAction } from "../../../store/slices/authSlice";
 
-import { Link, Route, Routes, useLocation } from "react-router-dom";
+import { Link, Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import AddPost from "./AddPost";
 import { ArrowLeft } from "lucide-react";
 import axiosInstance from "../../../utils/axiosInstance";
 import Loader from "../../loader/Loader";
+import { useDispatch } from "react-redux";
 
 
 const menuItems = [
@@ -407,6 +409,19 @@ const Dashboard = () => {
   const [activePage, setActivePage] = useState("Dashboard");
   const [admin, setAdmin] = useState(null);
   const location = useLocation(); 
+  const dispatch = useDispatch();
+const navigate = useNavigate();
+
+const handleLogout = async () => {
+  try {
+    await axiosInstance.post("http://localhost:5000/api/admin/logout");
+  } catch (err) {
+    console.error("Logout request failed:", err);
+  }
+  dispatch(logoutAction());  // clear Redux
+  navigate("/login");        // redirect
+};
+
 
 //   useEffect(() => {
 //     console.log("Traffic data:", data?.trafficData);
@@ -492,14 +507,17 @@ useEffect(() => {
         if (fullTrafficData.length >= 2) {
           const today = fullTrafficData[fullTrafficData.length - 1].traffic;
           const yesterday = fullTrafficData[fullTrafficData.length - 2].traffic;
-          setDailyChange(
+        
+          const change =
             yesterday === 0
               ? 0
-              : ((today - yesterday) / yesterday * 100).toFixed(1)
-          );
+              : ((today - yesterday) / yesterday) * 100;
+        
+          setDailyChange(Number(change.toFixed(1)));
         } else {
           setDailyChange(0);
         }
+        
   
         // Fetch current admin info
         const token = localStorage.getItem("accessToken");
@@ -593,7 +611,16 @@ useEffect(() => {
     {!collapsed && item.label}
   </Link>
 ))}
-
+ {/* Logout Button */}
+ <button
+    onClick={handleLogout}
+    className="flex items-center gap-3 w-full px-6 py-2 text-gray-300 hover:text-white hover:bg-red-600 mt-4"
+  >
+    <div className="w-10 h-10 flex items-center justify-center">
+      🚪
+    </div>
+    {!collapsed && "Logout"}
+  </button>
 
         </nav>
 
@@ -647,7 +674,13 @@ useEffect(() => {
   <span>New</span>
 </Link>
 
-        <button className="text-sm hover:underline">View Blog</button>
+<button
+  onClick={() => window.open("/blog", "_blank")}
+  className="text-sm hover:underline"
+>
+  View Blog
+</button>
+
       </div>
 
      <div className="flex items-center gap-2 text-sm">
@@ -674,13 +707,13 @@ useEffect(() => {
   {/*  If on Add Post page, show back + title */}
   {location.pathname.includes("/admin/posts/new") ? (
     <div className="flex items-center gap-3">
-      <button
-        onClick={() => window.history.back()}
-        className="flex items-center gap-1 text-sm text-gray-600 hover:text-gray-800"
-      >
-         <ArrowLeft size={18} /> {/* Lucide Back Arrow */}
-         <span>Back</span>
-      </button>
+    <button
+  onClick={() => navigate(-1)}
+  className="flex items-center ..."
+>
+  <ArrowLeft size={18} />
+  <span>Back</span>
+</button>
       <h1 className="text-2xl font-semibold">Add New Post</h1>
     </div>
   ) : (

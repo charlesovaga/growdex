@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { Pencil, Trash2, Share2, Eye, X, Search } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axiosInstance from "../../../utils/axiosInstance";
 import Loader from "../../loader/Loader";
 
@@ -19,7 +19,7 @@ const shareMenuRef = useRef(null);
     
     const [message, setMessage] = useState({ text: "", type: "" });
     const [loading, setLoading] = useState(false);
-
+    const navigate = useNavigate();
     const [deleteId, setDeleteId] = useState(null);
     const [search, setSearch] = useState("");
 
@@ -28,15 +28,11 @@ const shareMenuRef = useRef(null);
   }, [search]);
 
   const fetchPosts = async (page = 1, limit = 10, searchQuery = "") => {
-    setLoading(true); // start loader
+    setLoading(true);
     try {
-      const token = localStorage.getItem("accessToken");
-  
       const res = await axiosInstance.get(
-        `http://localhost:5000/api/posts?page=${page}&limit=${limit}&search=${searchQuery}`,
-        { headers: { Authorization: `Bearer ${token}` } }
+        `/posts?page=${page}&limit=${limit}&search=${searchQuery}`
       );
-  
       setPosts(res.data.posts || []);
       setPagination({
         total: res.data.total,
@@ -46,30 +42,28 @@ const shareMenuRef = useRef(null);
       });
     } catch (err) {
       console.error("Error fetching posts:", err.response?.data || err.message);
-     
     } finally {
-      setLoading(false); // stop loader
+      setLoading(false);
     }
   };
+  
   
 
   
   const handleDelete = async () => {
     try {
-      const token = localStorage.getItem("accessToken");
       await axiosInstance.delete(`/posts/admin/${deleteId}`);
-
-
       setPosts(posts.filter((p) => p._id !== deleteId));
       setDeleteId(null);
       setMessage({ text: "Post deleted successfully!", type: "success" });
     } catch (err) {
       console.error("Error deleting post:", err);
-      setMessage({ text: " Failed to delete post.", type: "error" });
+      setMessage({ text: "Failed to delete post.", type: "error" });
     }
-
+  
     setTimeout(() => setMessage({ text: "", type: "" }), 3000);
   };
+  
 
   useEffect(() => {
     const handleClickOutside = (e) => {
@@ -258,7 +252,7 @@ const shareMenuRef = useRef(null);
                   {/* Actions */}
                   <td className="px-2 py-2 flex justify-end space-x-2">
                   <button
-  onClick={() => window.location.href = `/admin/posts/edit/${post._id}`}
+  onClick={() => navigate = `/admin/posts/edit/${post._id}`}
   className="p-1 mt-2  text-gray-600 hover:text-black"
 >
   <Pencil size={16} />
@@ -352,7 +346,7 @@ const shareMenuRef = useRef(null);
 </div>
 
                     <button
-  onClick={() => window.open(`/blog/${post.slug}`, "_blank")}
+  onClick={() => navigate(`/blog/${post.slug}`, "_blank")}
   className="bg-gray-100  hover:bg-gray-200 px-4  rounded-full text-[10px] flex items-center space-x-1"
 >
 

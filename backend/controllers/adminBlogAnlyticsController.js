@@ -41,28 +41,57 @@ export const getDashboard = async (req, res) => {
       .limit(3)
       .select("title createdAt categories commentsCount featuredImage image");
 
+    // Aggregate traffic by month by month
+    // const trafficDataRaw = await Tracking.aggregate([
+    //   { $match: { createdAt: { $gte: from, $lt: to } } },
+    //   { $group: { _id: { $month: "$createdAt" }, traffic: { $sum: 1 } } },
+    //   { $sort: { _id: 1 } },
+    // ]);
+
+    // const trafficMap = {};
+    // trafficDataRaw.forEach(item => {
+    //   trafficMap[item._id] = item.traffic;
+    // });
+
+    // const trafficData = Array.from({ length: 12 }, (_, i) => {
+    //     const monthNum = i + 1;
+    //     const traffic = trafficMap[monthNum] || 0;
+    //     const year = new Date().getFullYear();
+    //     return {
+    //       month: monthNum,
+    //       traffic,
+    //       date: new Date(year, monthNum - 1, 1), // first day of month
+    //     };
+    //   });
+
+    // Cummulative of every month in a year
     // Aggregate traffic by month
-    const trafficDataRaw = await Tracking.aggregate([
-      { $match: { createdAt: { $gte: from, $lt: to } } },
-      { $group: { _id: { $month: "$createdAt" }, traffic: { $sum: 1 } } },
-      { $sort: { _id: 1 } },
-    ]);
+const trafficDataRaw = await Tracking.aggregate([
+  { $match: { createdAt: { $gte: from, $lt: to } } },
+  { $group: { _id: { $month: "$createdAt" }, traffic: { $sum: 1 } } },
+  { $sort: { "_id": 1 } },
+]);
 
-    const trafficMap = {};
-    trafficDataRaw.forEach(item => {
-      trafficMap[item._id] = item.traffic;
-    });
+// Map month -> traffic
+const trafficMap = {};
+trafficDataRaw.forEach(item => {
+  trafficMap[item._id] = item.traffic;
+});
 
-    const trafficData = Array.from({ length: 12 }, (_, i) => {
-        const monthNum = i + 1;
-        const traffic = trafficMap[monthNum] || 0;
-        const year = new Date().getFullYear();
-        return {
-          month: monthNum,
-          traffic,
-          date: new Date(year, monthNum - 1, 1), // first day of month
-        };
-      });
+// Build cumulative traffic
+let cumulative = 0;
+const trafficData = Array.from({ length: 12 }, (_, i) => {
+  const monthNum = i + 1;
+  const monthlyTraffic = trafficMap[monthNum] || 0;
+  cumulative += monthlyTraffic; // accumulate
+  const year = new Date().getFullYear();
+  return {
+    month: monthNum,
+    traffic: cumulative,  // cumulative total
+    date: new Date(year, monthNum - 1, 1),
+  };
+});
+
       
 
     // Device data

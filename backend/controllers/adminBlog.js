@@ -114,18 +114,17 @@ export const login = async (req, res) => {
     const refreshToken = signRefresh({ sub: admin._id });
 
     // Send refresh token as httpOnly cookie + access token in JSON
-    res
-      .cookie("gid", refreshToken, {
-        httpOnly: true,
-        sameSite: "lax",
-        secure: COOKIE_SECURE === "true",
-        path: "/api/admin/refresh",
-        maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
-      })
-      .json({
-        accessToken,
-        user: { id: admin._id, email: admin.email, name: admin.name },
-      });
+    res.cookie("gid", refreshToken, {
+      httpOnly: true,
+      sameSite: "lax",
+      secure: COOKIE_SECURE,    // <-- FIXED
+      path: "/",       // <-- FIXED
+      maxAge: 7 * 24 * 60 * 60 * 1000,
+    }).json({
+      accessToken,
+      admin: { id: admin._id, email: admin.email, name: admin.name },
+    });
+    
   } catch (err) {
     console.error("Admin login error:", err);
     res.status(500).json({ message: "Server error" });
@@ -158,7 +157,14 @@ export const refresh = async (req, res) => {
 
 // 🚪 Admin Logout
 export const logout = (req, res) => {
-  res.clearCookie("gid", { path: "/api/admin/refresh" }).json({ ok: true });
+  res.clearCookie("gid", {
+    httpOnly: true,
+    secure: true,
+    sameSite: "none",
+    path: "/",
+  });
+  return res.json({ ok: true });
+  
 };
 
 // 👤 Get Current Admin Info

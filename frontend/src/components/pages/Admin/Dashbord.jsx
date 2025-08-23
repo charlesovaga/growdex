@@ -133,7 +133,7 @@ const icons = {
           0,
           Math.max(...data.trafficData.map((d) => d.traffic)) * 1.1 || 100,
         ]}
-        tickFormatter={(v) => `${v}`}
+        tickFormatter={(v) => v.toFixed(0)} 
         tick={{ fontSize: 12, fill: "#6B7280" }}
         axisLine={false}
         tickLine={false}

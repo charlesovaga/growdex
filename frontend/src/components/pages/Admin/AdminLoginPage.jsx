@@ -208,6 +208,7 @@ import { useDispatch } from "react-redux";
 import { setCredentials } from "../../../store/slices/authSlice";
 import logo from "../../../assets/Frame 1686560934 (1).png";
 import axiosInstance from "../../../utils/axiosInstance";
+import { useNavigate } from "react-router-dom";
 
 export default function AdminLogin() {
   const [email, setEmail] = useState("");
@@ -215,7 +216,7 @@ export default function AdminLogin() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const dispatch = useDispatch();
-
+  const navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -233,14 +234,11 @@ export default function AdminLogin() {
       dispatch(
         setCredentials({
           token: res.data.accessToken,
-          admin: { email },
+          admin: res.data.admin, 
         })
       );
 
-      //  also save in localStorage
-      localStorage.setItem("accessToken", res.data.accessToken);
-
-      window.location.href = "/admin/dashboard";
+      navigate("/admin/dashboard");
     } catch (err) {
       setError(err.response?.data?.message || "Login failed");
     } finally {

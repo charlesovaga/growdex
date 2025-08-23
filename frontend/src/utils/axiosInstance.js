@@ -1,13 +1,16 @@
+// src/utils/axiosInstance.js
 import axios from "axios";
+import { logout, setCredentials } from "../store/slices/authSlice";
+import store from "../store";
 
 const axiosInstance = axios.create({
   baseURL: "http://localhost:5000/api",
-  withCredentials: true, 
+  withCredentials: true, // include cookies
 });
 
-// Request interceptor: attach token
+// Request interceptor: attach token from Redux (not localStorage)
 axiosInstance.interceptors.request.use((config) => {
-  const token = localStorage.getItem("accessToken");
+  const token = store.getState().auth.token;
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
   }
@@ -24,7 +27,7 @@ axiosInstance.interceptors.response.use(
       originalRequest._retry = true;
 
       try {
-        // Call refresh endpoint
+        // Refresh token request (cookie will be sent automatically)
         const res = await axios.post(
           "http://localhost:5000/api/admin/refresh",
           {},
@@ -33,23 +36,17 @@ axiosInstance.interceptors.response.use(
 
         const newToken = res.data.accessToken;
 
-        // Save new token
-        localStorage.setItem("accessToken", newToken);
+        // Update Redux store (instead of localStorage)
+        store.dispatch(setCredentials({ token: newToken }));
 
-        // Update headers
-        axiosInstance.defaults.headers.common[
-          "Authorization"
-        ] = `Bearer ${newToken}`;
+        // Retry original request with new token
         originalRequest.headers["Authorization"] = `Bearer ${newToken}`;
-
-        // Retry original request
         return axiosInstance(originalRequest);
       } catch (err) {
         console.error("Refresh token failed:", err);
-
-        // Force logout if refresh fails
-        localStorage.removeItem("accessToken");
-        window.location.href = "/admin/login";
+        store.dispatch(logout());
+        return Promise.reject(err);
+       
       }
     }
 
