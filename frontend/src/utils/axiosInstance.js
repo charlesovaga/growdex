@@ -4,9 +4,10 @@ import { logout, setCredentials } from "../store/slices/authSlice";
 import store from "../store";
 
 const axiosInstance = axios.create({
-  baseURL: "http://localhost:5000/api",
-  withCredentials: true, // include cookies
-});
+    baseURL: `${import.meta.env.VITE_API_URL}/api`,
+    withCredentials: true,
+  });
+  
 
 // Request interceptor: attach token from Redux (not localStorage)
 axiosInstance.interceptors.request.use((config) => {
@@ -29,10 +30,11 @@ axiosInstance.interceptors.response.use(
       try {
         // Refresh token request (cookie will be sent automatically)
         const res = await axios.post(
-          "http://localhost:5000/api/admin/refresh",
-          {},
-          { withCredentials: true }
-        );
+            `${import.meta.env.VITE_API_URL}/api/admin/refresh`,
+            {},
+            { withCredentials: true }
+          );
+          
 
         const newToken = res.data.accessToken;
 
