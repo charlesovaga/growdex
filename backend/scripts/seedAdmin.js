@@ -20,7 +20,7 @@ const seedAdmin = async () => {
     });
 
     await admin.save();
-    console.log("✅ Admin seeded successfully");
+    console.log(" Admin seeded successfully");
     process.exit();
   } catch (error) {
     console.error("❌ Error seeding admin:", error);

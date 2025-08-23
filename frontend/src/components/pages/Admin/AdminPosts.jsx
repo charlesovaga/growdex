@@ -2,7 +2,7 @@
 // import axios from "axios";
 
 
-// // ✅ Set base URL for Axios
+// //  Set base URL for Axios
 // // Change the port to match your backend
 // axios.defaults.baseURL =
 //   process.env.NODE_ENV === "development"
@@ -16,7 +16,7 @@
 //   const [limit] = useState(10);
 //   const [totalPages, setTotalPages] = useState(1);
 //   const [search, setSearch] = useState("");
-//   const [debouncedSearch, setDebouncedSearch] = useState(search); // ✅ Debounced search
+//   const [debouncedSearch, setDebouncedSearch] = useState(search); //  Debounced search
 //   const [sortBy, setSortBy] = useState("newest");
 //   const [modalOpen, setModalOpen] = useState(false);
 //   const [editingPost, setEditingPost] = useState(null);
@@ -32,7 +32,7 @@
 //   const [previewFeatured, setPreviewFeatured] = useState(null);
 //   const [previewImages, setPreviewImages] = useState([]);
 
-//   // ✅ Debounce effect for search
+//   //  Debounce effect for search
 //   useEffect(() => {
 //     const handler = setTimeout(() => setDebouncedSearch(search), 500);
 //     return () => clearTimeout(handler);
@@ -119,7 +119,7 @@
 // const handleSubmit = async (e) => {
 //     e.preventDefault();
   
-//     // ✅ 1. Basic validation
+//     //  1. Basic validation
 //     if (!formData.title.trim() || !formData.body.trim() || !formData.author.trim() || !formData.slug.trim()) {
 //       alert("Please fill in all required fields: Title, Author, Body, Slug");
 //       return;
@@ -133,24 +133,24 @@
 //       data.append("tags", formData.tags.trim());
 //       data.append("slug", formData.slug.trim());
   
-//       // ✅ 2. Featured image (optional)
+//       //  2. Featured image (optional)
 //       if (formData.featuredImage) {
 //         data.append("featuredImage", formData.featuredImage);
 //       }
   
-//       // ✅ 3. Multiple images (optional)
+//       //  3. Multiple images (optional)
 //       if (formData.images && formData.images.length > 0) {
 //         formData.images.forEach((img) => data.append("images", img));
 //       }
   
-//       // ✅ 4. Create or update post
+//       //  4. Create or update post
 //       if (editingPost) {
 //         await axios.put(`/api/posts/${editingPost.slug}`, data);
 //       } else {
 //         await axios.post("/api/posts", data);
 //       }
   
-//       // ✅ 5. Refresh posts and reset form
+//       //  5. Refresh posts and reset form
 //       fetchPosts();
 //       setModalOpen(false);
 //       setEditingPost(null);
@@ -206,7 +206,7 @@
 //         </select>
 //       </div>
 
-//       {/* ✅ Dynamic Tag Filter */}
+//       {/* Dynamic Tag Filter */}
 //       <div className="flex gap-2 mb-4 flex-wrap">
 //       <div className="flex gap-2 mb-4 flex-wrap">
 //   {Array.from(
@@ -353,7 +353,7 @@
 //               <div>
 //                 <label className="block mb-1">Multiple Images:</label>
 //                 <input type="file" name="images" multiple onChange={handleChange}/>
-//                 {/* ✅ Improved image preview with remove */}
+//                 {/*  Improved image preview with remove */}
 //                 <div className="flex gap-2 mt-2">
 // {(previewImages || []).map((img, i) => (
 //                     <div key={i} className="relative">
@@ -396,7 +396,7 @@
 // import React, { useState, useEffect } from "react";
 // import axios from "axios";
 
-// // ✅ Set base URL for Axios
+// //  Set base URL for Axios
 // // Change the port to match your backend
 // axios.defaults.baseURL =
 //   process.env.NODE_ENV === "development"
@@ -410,7 +410,7 @@
 //   const [limit] = useState(10);
 //   const [totalPages, setTotalPages] = useState(1);
 //   const [search, setSearch] = useState("");
-//   const [debouncedSearch, setDebouncedSearch] = useState(search); // ✅ Debounced search
+//   const [debouncedSearch, setDebouncedSearch] = useState(search); //  Debounced search
 //   const [sortBy, setSortBy] = useState("newest");
 //   const [modalOpen, setModalOpen] = useState(false);
 //   const [editingPost, setEditingPost] = useState(null);
@@ -426,10 +426,10 @@
 //   const [previewFeatured, setPreviewFeatured] = useState(null);
 //   const [previewImages, setPreviewImages] = useState([]);
   
-//   // ✅ New: form errors state
+//   //  New: form errors state
 //   const [formErrors, setFormErrors] = useState([]);
 
-//   // ✅ Debounce effect for search
+//   //  Debounce effect for search
 //   useEffect(() => {
 //     const handler = setTimeout(() => setDebouncedSearch(search), 500);
 //     return () => clearTimeout(handler);
@@ -489,7 +489,7 @@
 //   const handleSubmit = async (e) => {
 //     e.preventDefault();
 
-//     // ✅ 1. Basic validation
+//     //  1. Basic validation
 //     const errors = [];
 //     if (!formData.title.trim()) errors.push("Title is required");
 //     if (!formData.author.trim()) errors.push("Author is required");
@@ -509,31 +509,31 @@
 //       data.append("tags", formData.tags.trim());
 //       data.append("slug", formData.slug.trim());
 
-//       // ✅ Featured image
+//       //  Featured image
 //       if (formData.featuredImage) {
 //         data.append("featuredImage", formData.featuredImage);
 //       }
 
-//       // ✅ Multiple images
+//       //  Multiple images
 //       if (formData.images && formData.images.length > 0) {
 //         formData.images.forEach((img) => data.append("images", img));
 //       }
 
-//       // ✅ Create or update post
+//       //  Create or update post
 //       if (editingPost) {
 //         await axios.put(`/api/posts/${editingPost.slug}`, data);
 //       } else {
 //         await axios.post("/api/posts", data);
 //       }
 
-//       // ✅ Refresh posts and reset form
+//       //  Refresh posts and reset form
 //       fetchPosts();
 //       setModalOpen(false);
 //       setEditingPost(null);
 //       setFormData({ title: "", author: "", body: "", tags: "", slug: "", featuredImage: null, images: [] });
 //       setPreviewFeatured(null);
 //       setPreviewImages([]);
-//       setFormErrors([]); // ✅ clear errors after success
+//       setFormErrors([]); //  clear errors after success
 //     } catch (err) {
 //       console.error(err);
 //       setFormErrors([err.response?.data?.message || "Failed to save post. Please check the console."]);
@@ -706,7 +706,7 @@
 //           <div className="bg-white p-6 rounded w-2/3 max-h-full overflow-auto">
 //             <h2 className="text-xl font-bold mb-4">{editingPost ? "Edit Post" : "Create Post"}</h2>
 
-//             {/* ✅ Render form errors */}
+//             {/*  Render form errors */}
 //             {formErrors.length > 0 && (
 //               <div className="bg-red-100 text-red-700 p-3 mb-4 rounded">
 //                 <ul className="list-disc list-inside">
@@ -773,8 +773,9 @@
 
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import axiosInstance from "../../../utils/axiosInstance";
+import Loader from "../../loader/Loader";
 
-// ✅ Set base URL for Axios
 axios.defaults.baseURL =
   process.env.NODE_ENV === "development"
     ? "http://localhost:5000"
@@ -803,14 +804,14 @@ const AdminPosts = () => {
   const [previewFeatured, setPreviewFeatured] = useState(null);
   const [previewImages, setPreviewImages] = useState([]);
 
-  // ✅ Delete modal state
+  //  Delete modal state
   const [deleteModal, setDeleteModal] = useState({
     open: false,
     slug: null,
     title: ""
   });
 
-  // ✅ Debounce effect for search
+  //  Debounce effect for search
   useEffect(() => {
     const handler = setTimeout(() => setDebouncedSearch(search), 500);
     return () => clearTimeout(handler);
@@ -820,7 +821,7 @@ const AdminPosts = () => {
   const fetchPosts = async () => {
     setLoading(true);
     try {
-      const res = await axios.get("/api/posts", {
+      const res = await axiosInstance.get("/api/posts", {
         params: { page, limit, search: debouncedSearch, sortBy },
       });
       setPosts(res.data.posts);
@@ -856,11 +857,12 @@ const AdminPosts = () => {
       title: post.title,
       author: post.author,
       body: post.body,
-      tags: post.tags.join(","),
+     
       slug: post.slug,
       featuredImage: null,
       images: [],
     });
+    setTags(post.tags.map(t => ({ name: t, selected: false })));
     setPreviewFeatured(post.featuredImage?.url || null);
     setPreviewImages(post.images?.map((img) => img.url) || []);
     setModalOpen(true);
@@ -897,9 +899,9 @@ const AdminPosts = () => {
       const config = { headers: { "Content-Type": "multipart/form-data" } };
   
       if (editingPost) {
-        await axios.put(`/api/posts/${editingPost.slug}`, data, config);
+        await axiosInstance.put(`/api/posts/admin/${editingPost._id}`, data, config);
       } else {
-        await axios.post("/api/posts", data, config);
+        await axiosInstance.post("/api/posts", data, config);
       }
   
       fetchPosts();
@@ -926,9 +928,9 @@ const AdminPosts = () => {
   
 
   // Open delete modal
-  const confirmDelete = (slug, title) => {
-    setDeleteModal({ open: true, slug, title });
-  };
+  const confirmDelete = (id, title) => {
+      setDeleteModal({ open: true, slug: id, title });
+    };
 
   // Cancel delete
   const cancelDelete = () => {
@@ -982,7 +984,7 @@ const AdminPosts = () => {
 
       {/* Posts Table */}
       {loading ? (
-        <p>Loading...</p>
+       <Loader/>
       ) : (
         <table className="w-full border">
           <thead>
@@ -1013,7 +1015,7 @@ const AdminPosts = () => {
                     }}
                     onBlur={async () => {
                       try {
-                        await axios.put(`/api/posts/${post.slug}`, { tags: post.tags.join(",") });
+                        await axiosInstance.put(`/api/posts/admin/${post._id}`, { tags: post.tags.join(",") });
                       } catch (err) {
                         console.error(err);
                       }
@@ -1033,7 +1035,7 @@ const AdminPosts = () => {
                     }}
                     onBlur={async () => {
                       try {
-                        await axios.put(`/api/posts/${post.slug}`, { popularity: post.popularity });
+                        await axiosInstance.put(`/api/posts/admin/${post._id}`, { popularity: post.popularity });
                       } catch (err) {
                         console.error(err);
                       }
@@ -1045,7 +1047,7 @@ const AdminPosts = () => {
                       const newPop = (post.popularity || 0) + 1;
                       setPosts(posts.map(p => p._id === post._id ? { ...p, popularity: newPop } : p));
                       try {
-                        await axios.put(`/api/posts/${post.slug}`, { popularity: newPop });
+                        await axiosInstance.put(`/api/posts/admin/${post._id}`, { popularity: newPop });
                       } catch (err) {
                         console.error(err);
                       }
@@ -1066,7 +1068,7 @@ const AdminPosts = () => {
                   </button>
                   <button
                     className="bg-red-500 text-white px-2 py-1 rounded"
-                    onClick={() => confirmDelete(post.slug, post.title)}
+                    onClick={() => confirmDelete(post._id, post.title)}
                   >
                     Delete
                   </button>
@@ -1087,7 +1089,7 @@ const AdminPosts = () => {
       {/* Create/Edit Modal */}
       {modalOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
-          <div className="bg-white p-6 rounded w-2/3 max-h-full overflow-auto">
+          <div className="bg-white p-6 rounded w-2/3 max-h-full overlow-auto">
             <h2 className="text-xl font-bold mb-4">{editingPost ? "Edit Post" : "Create Post"}</h2>
             <form onSubmit={handleSubmit} className="flex flex-col gap-3">
               <input name="title" placeholder="Title" value={formData.title} onChange={handleChange} className="border p-2 rounded"/>
@@ -1136,7 +1138,7 @@ const AdminPosts = () => {
         </div>
       )}
 
-      {/* ✅ Delete Confirmation Modal */}
+      {/*  Delete Confirmation Modal */}
       {deleteModal.open && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
           <div className="bg-white p-6 rounded shadow-md w-80 text-center">
@@ -1147,7 +1149,7 @@ const AdminPosts = () => {
                 className="bg-red-500 text-white px-4 py-2 rounded"
                 onClick={async () => {
                   try {
-                    await axios.delete(`/api/posts/${deleteModal.slug}`);
+                    await axiosInstance.delete(`/api/posts/admin/${deleteModal.slug}`);
                     fetchPosts();
                   } catch (err) {
                     console.error(err);

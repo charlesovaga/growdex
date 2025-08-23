@@ -21,7 +21,7 @@ const LandingPage = () => {
 
   return (
   <>
-  {/* ✅ Nav OUTSIDE hero container */}
+  {/*  Nav OUTSIDE hero container */}
   {/* <Nav onCompanyHover={setIsCompanyHovered} /> */}
 
   <div
@@ -57,11 +57,7 @@ const LandingPage = () => {
 
   {/* Other sections */}
   <div
-  className={`relative z-10 transition-all duration-[3000ms] ease-[cubic-bezier(0.4,0,0.2,1)] will-change-transform ${
-    isCompanyHovered
-      ? "opacity-80 blur-[10px]"
-      : "opacity-100 blur-0"
-  }`}
+ 
 >
   {/* <BottomLogos />
   <WhyWeUseAzonto />

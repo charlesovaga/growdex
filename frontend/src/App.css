@@ -279,3 +279,6 @@ input[type="number"] {
   -ms-overflow-style: none;  /* IE/Edge */
   scrollbar-width: none;     /* Firefox */
 }
+/* .italic-block {
+  @apply italic bg-gray-100 p-4 rounded-lg text-center text-lg my-4;
+} */

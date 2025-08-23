@@ -285,7 +285,7 @@ export default function HeroSection({ placeholder = "Enter your email" }) {
         email,
         firstName,
       })
-      setSuccess("✅ Successfully joined!")
+      setSuccess(" Successfully joined!")
       setEmail("")
       setFirstName("")
     } catch (err) {
@@ -342,13 +342,18 @@ export default function HeroSection({ placeholder = "Enter your email" }) {
             required
             className="border border-gray-300 bg-white px-4 py-3 rounded-md w-full md:w-[200px] text-sm"
           />
-          <button
-            type="submit"
-            disabled={loading || !email || !firstName}
-            className="bg-black text-white px-5 py-3 rounded-md font-medium w-full text-center text-sm md:w-[150px]"
-          >
-            {loading ? "Joining..." : "Join Waitlist →"}
-          </button>
+        <button
+  type="submit"
+  disabled={loading || !email || !firstName}
+  className="bg-black text-white px-5 py-3 rounded-md font-medium w-full text-center text-sm md:w-[150px] flex justify-center items-center"
+>
+  {loading ? (
+    <span className="w-5 h-5 rounded-full animate-spin border-2 border-t-transparent border-b-transparent border-l-white border-r-blue-400"></span>
+  ) : (
+    "Join Waitlist →"
+  )}
+</button>
+
         </form>
 
         {/* Feedback messages */}

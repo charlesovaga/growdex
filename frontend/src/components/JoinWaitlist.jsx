@@ -140,12 +140,12 @@ const JoinWaitlist = ({ placeholder = "Enter your email" }) => {
       })
 
       // Optionally: update success if backend confirms
-      setSuccess("✅ Successfully joined!")
+      setSuccess(" Successfully joined!")
       setEmail('')
       setFirstName('')
     } catch (err) {
       // If it fails, update error message
-      setError("❌ Something went wrong. Please try again.")
+      setError(" Something went wrong. Please try again.")
       setSuccess("")
     } finally {
       setLoading(false)
@@ -184,7 +184,7 @@ const JoinWaitlist = ({ placeholder = "Enter your email" }) => {
             className="bg-yellow-200 hover:bg-yellow-300 text-black font-semibold px-4 py-3 rounded-md transition w-full"
           >
             {loading ? (
-              "Joining..."
+            <span className="w-5 h-5 rounded-full animate-spin border-2 border-t-transparent border-b-transparent border-l-white border-r-blue-400"></span>
             ) : (
               <span className="flex flex-row justify-center gap-2 items-center">
                 <span>Join Waitlist</span>
@@ -204,20 +204,22 @@ const JoinWaitlist = ({ placeholder = "Enter your email" }) => {
             required
             className="flex-none py-3 px-5 rounded-md text-black bg-white outline-none w-[140px] xl:w-[160px]"
           />
-          <button
-            type="submit"
-            disabled={loading || !email || !firstName}
-            className="bg-yellow-200 hover:bg-yellow-300 text-black font-semibold px-5 py-2.5 rounded-md transition whitespace-nowrap"
-          >
-            {loading ? (
-              "Joining..."
-            ) : (
-              <span className="flex flex-row items-center gap-1">
-                <span>Join Waitlist</span>
-                <span>→</span>
-              </span>
-            )}
-          </button>
+         <button
+  type="submit"
+  disabled={loading || !email || !firstName}
+  className="bg-yellow-200 hover:bg-yellow-300 text-black font-semibold px-5 py-2.5 rounded-md transition whitespace-nowrap flex justify-center items-center"
+>
+  {loading ? (
+    // Make spinner slightly bigger and visible
+    <span className="w-5 h-5 border-2 border-t-transparent border-b-transparent border-l-black border-r-black rounded-full animate-spin"></span>
+  ) : (
+    <span className="flex flex-row items-center gap-1">
+      <span>Join Waitlist</span>
+      <span>→</span>
+    </span>
+  )}
+</button>
+
         </div>
       </form>
 

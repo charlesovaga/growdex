@@ -27,7 +27,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  token: localStorage.getItem("authToken") || null,
+  token: localStorage.getItem("accessToken") || null,
   admin: JSON.parse(localStorage.getItem("adminData")) || null,
 };
 
@@ -39,16 +39,16 @@ const authSlice = createSlice({
       state.token = action.payload.token;
       state.admin = action.payload.admin;
 
-      // ✅ persist to localStorage
-      localStorage.setItem("authToken", action.payload.token);
+      //  persist to localStorage
+      localStorage.setItem("accessToken", action.payload.token);
       localStorage.setItem("adminData", JSON.stringify(action.payload.admin));
     },
     logout: (state) => {
       state.token = null;
       state.admin = null;
 
-      // ✅ clear localStorage
-      localStorage.removeItem("authToken");
+      //  clear localStorage
+      localStorage.removeItem("accessToken");
       localStorage.removeItem("adminData");
     },
   },

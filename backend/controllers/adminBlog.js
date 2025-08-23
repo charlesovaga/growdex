@@ -89,10 +89,7 @@ import User from "../models/User.js";
 import { signAccess, signRefresh } from "../utils/jwt.js";
 import { COOKIE_SECURE, JWT_REFRESH_SECRET } from "../config.js";
 
-const {
-  JWT_REFRESH_SECRET = "dev_refresh_secret_change_me",
-  COOKIE_SECURE = "false",
-} = process.env;
+
 
 // 🔑 Admin Login
 export const login = async (req, res) => {

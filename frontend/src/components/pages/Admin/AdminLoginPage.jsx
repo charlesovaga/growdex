@@ -99,7 +99,7 @@
 //       const res = await axios.post(
 //         "http://localhost:5000/api/admin/login", // adjust to your backend route
 //         { email, password },
-//         { withCredentials: true } // ✅ allows cookies for refresh token
+//         { withCredentials: true } //  allows cookies for refresh token
 //       );
 
 //       // Store access token in localStorage
@@ -203,10 +203,11 @@
 
 import React, { useState } from "react";
 import { Mail, Lock } from "lucide-react";
-import axios from "axios";
+
 import { useDispatch } from "react-redux";
 import { setCredentials } from "../../../store/slices/authSlice";
 import logo from "../../../assets/Frame 1686560934 (1).png";
+import axiosInstance from "../../../utils/axiosInstance";
 
 export default function AdminLogin() {
   const [email, setEmail] = useState("");
@@ -221,13 +222,14 @@ export default function AdminLogin() {
     setError("");
 
     try {
-      const res = await axios.post(
-        "http://localhost:5000/api/admin/login",
+      const res = await axiosInstance.post(
+        "/admin/login",   
         { email, password },
         { withCredentials: true }
       );
+      
 
-      // ✅ store in redux
+      //  store in redux
       dispatch(
         setCredentials({
           token: res.data.accessToken,
@@ -235,8 +237,8 @@ export default function AdminLogin() {
         })
       );
 
-      // ✅ also save in localStorage
-      localStorage.setItem("authToken", res.data.accessToken);
+      //  also save in localStorage
+      localStorage.setItem("accessToken", res.data.accessToken);
 
       window.location.href = "/admin/dashboard";
     } catch (err) {

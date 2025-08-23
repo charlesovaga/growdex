@@ -66,7 +66,7 @@ React.useEffect(() => {
   Connect and manage your campaigns <br /> across all major social and ad platforms, <br /> seamlessly, powerfully, and in one place
   </p>
 
-  {/* ✅ Company Address */}
+  {/*  Company Address */}
   
   {/* <p className="text-black text-sm mt-24 ">
  <span className="font-bold"> Contact us: <br /></span>
@@ -294,7 +294,7 @@ React.useEffect(() => {
 //   Connect and manage your campaigns <br /> across all major social and ad platforms, <br /> seamlessly, powerfully, and in one place
 //   </p>
 
-//   {/* ✅ Company Address */}
+//   {/*  Company Address */}
   
 //   {/* <p className="text-black text-sm mt-24 ">
 //  <span className="font-bold"> Contact us: <br /></span>
