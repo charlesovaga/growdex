@@ -55,52 +55,44 @@
 // init();
 
 
-// Loader
-
 // src/main.jsx
-import React, { useEffect, useState } from "react";
-import ReactDOM from "react-dom/client";
+import { StrictMode } from "react";
+import { createRoot } from "react-dom/client";
+import "./App.css";
 import { Provider } from "react-redux";
-import App from "./App";
 import store from "./store";
-import { setCredentials, logout } from "./store/slices/authSlice";
-import axios from "axios";
-import Loader from "./components/loader/Loader";
+import App from "./App.jsx";
+import { BrowserRouter } from "react-router-dom";
+import { bootstrapAuth } from "./utils/bootstrapAuth.js";
+import Loader from "./components/loader/Loader.jsx";
 
+const root = createRoot(document.getElementById("root"));
 
+async function init() {
+  // Show loader immediately
+  root.render(
+    <StrictMode>
+      <Loader />
+    </StrictMode>
+  );
 
-const Main = () => {
-  const [bootstrapped, setBootstrapped] = useState(false);
-
-  useEffect(() => {
-    const bootstrapAuth = async () => {
-      try {
-        const res = await axios.post(
-          `${import.meta.env.VITE_API_URL}/api/admin/refresh`,
-          {},
-          { withCredentials: true }
-        );
-        store.dispatch(setCredentials({ token: res.data.accessToken }));
-      } catch (err) {
-        store.dispatch(logout());
-      } finally {
-        // 👇 this always runs, success or fail
-        setBootstrapped(true);
-      }
-    };
-
-    bootstrapAuth();
-  }, []);
-
-  if (!bootstrapped) {
-    return <Loader />; // only shown briefly on first load
+  try {
+    await bootstrapAuth(); // fetch user / token restore
+  } catch (err) {
+    console.error("Auth bootstrap failed:", err);
+    // optional: show a toast or fallback UI
+  } finally {
+    // ✅ Always render the real app, even if bootstrapAuth fails
+    root.render(
+      <StrictMode>
+        <Provider store={store}>
+          <BrowserRouter>
+            <App />
+          </BrowserRouter>
+        </Provider>
+      </StrictMode>
+    );
   }
+}
 
-  return <App />;
-};
-
-ReactDOM.createRoot(document.getElementById("root")).render(
-  <Provider store={store}>
-    <Main />
-  </Provider>
-);
+init();
