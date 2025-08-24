@@ -63,11 +63,11 @@ app.use("/api/tags", tagRoutes);
 // Test route
 app.get('/', (req, res) => res.send('Growdex API is running'));
 // Serve React static files
-app.use(express.static(path.join(__dirname, 'frontend/build')));
+app.use(express.static(path.join(__dirname, '../frontend/build')));
 
 // Catch-all route for SPA
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'frontend/build', 'index.html'));
+  res.sendFile(path.join(__dirname, '../frontend/build', 'index.html'));
 });
 app._router.stack.forEach(r => {
   if (r.route) {
