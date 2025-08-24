@@ -8,8 +8,12 @@ function App() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    bootstrapAuth().finally(() => setLoading(false));
+    bootstrapAuth().finally(() => {
+      console.log("Hiding loader now");
+      setLoading(false);
+    });
   }, []);
+  
 
   if (loading) return <Loader/>;
 

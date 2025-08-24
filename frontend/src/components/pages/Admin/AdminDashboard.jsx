@@ -472,9 +472,8 @@ useEffect(() => {
     const fetchData = async () => {
       try {
         // Fetch dashboard data
-        const dashboardRes = await axiosInstance.get(
-          "http://localhost:5000/api/admin-dashboard/dashboard"
-        );
+        const dashboardRes = await axiosInstance.get("/api/admin-dashboard/dashboard")
+        ;
   
         const apiData = dashboardRes.data;
   

@@ -776,10 +776,7 @@ import axios from "axios";
 import axiosInstance from "../../../utils/axiosInstance";
 import Loader from "../../loader/Loader";
 
-axios.defaults.baseURL =
-  process.env.NODE_ENV === "development"
-    ? "http://localhost:5000"
-    : "https://your-production-backend.com";
+
 
 const AdminPosts = () => {
   const [posts, setPosts] = useState([]);

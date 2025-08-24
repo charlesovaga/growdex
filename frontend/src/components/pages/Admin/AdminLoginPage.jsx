@@ -217,34 +217,49 @@ export default function AdminLogin() {
   const [error, setError] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-    setError("");
 
-    try {
-      const res = await axiosInstance.post(
-        "/admin/login",   
-        { email, password },
-        { withCredentials: true }
-      );
-      
 
-      //  store in redux
-      dispatch(
-        setCredentials({
-          token: res.data.accessToken,
-          admin: res.data.admin, 
-        })
-      );
+ const handleSubmit = async (e) => {
+  e.preventDefault();
+  setLoading(true);
+  setError("");
 
-      navigate("/admin/dashboard");
-    } catch (err) {
-      setError(err.response?.data?.message || "Login failed");
-    } finally {
-      setLoading(false);
+  try {
+    // const res = await axiosInstance.post(
+    //   `${import.meta.env.VITE_API_URL}/api/admin/login`,
+    //   { email, password },
+    //   { withCredentials: true }
+    // );
+    const res = await axiosInstance.post(
+      "/api/admin/login",
+      { email, password },
+      { withCredentials: true }
+    );
+    
+
+    // store in Redux or localStorage
+    dispatch(
+      setCredentials({
+        token: res.data.accessToken,
+        admin: res.data.admin,
+      })
+    );
+
+    navigate("/admin/dashboard");
+  } catch (err) {
+    console.error("Login error:", err);
+
+    // Show backend message if it exists
+    if (err.response && err.response.data && err.response.data.message) {
+      setError(err.response.data.message);
+    } else {
+      setError("Login failed");
     }
-  };
+  } finally {
+    setLoading(false);
+  }
+};
+
 
 //   return (
 

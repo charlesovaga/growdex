@@ -16,7 +16,7 @@ const BlogDetail = () => {
   useEffect(() => {
     const trackView = async () => {
       try {
-        await axiosInstance.post("http://localhost:5000/api/track/pageview", {
+        await axiosInstance.post("/track/pageview", {
           page: `/blog/${slug}`,
           deviceType: /Mobi|Android/i.test(navigator.userAgent) ? "mobile" : "web",
         });
@@ -31,7 +31,7 @@ const BlogDetail = () => {
   useEffect(() => {
     const fetchPost = async () => {
       try {
-        const res = await axiosInstance.get(`http://localhost:5000/api/posts/${slug}`);
+        const res = await axiosInstance.get(`/posts/${slug}`);
 
         console.log("API response for single post:", res.data);
         setPost(res.data);
