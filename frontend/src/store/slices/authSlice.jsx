@@ -57,13 +57,14 @@
 // export const { setCredentials, logout } = authSlice.actions;
 // export default authSlice.reducer;
 
-// store/slices/authSlice.js
+
+// src/features/auth/authSlice.js
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   token: null,
-  user: null,
-  loading: true, // important to know while bootstrapping
+  admin: null,
+  loading: true,
 };
 
 const authSlice = createSlice({
@@ -72,19 +73,16 @@ const authSlice = createSlice({
   reducers: {
     setCredentials: (state, action) => {
       state.token = action.payload.token;
-      state.user = action.payload.user;
+      state.admin = action.payload.admin || state.admin;
       state.loading = false;
     },
-    clearAuth: (state) => {
+    logout: (state) => {
       state.token = null;
-      state.user = null;
-      state.loading = false;
-    },
-    finishLoading: (state) => {
+      state.admin = null;
       state.loading = false;
     },
   },
 });
 
-export const { setCredentials, clearAuth, finishLoading } = authSlice.actions;
+export const { setCredentials, logout } = authSlice.actions;
 export default authSlice.reducer;
