@@ -96,9 +96,7 @@ export default function TagTable() {
   
 
   const handleDelete = async () => {
-    await fetch(`/tags/${deleteId}`, {
-      method: "DELETE",
-    });
+    await axiosInstance.delete(`/tags/${deleteId}`);
     setTags(tags.filter((c) => c._id !== deleteId));
     setDeleteId(null);
   };

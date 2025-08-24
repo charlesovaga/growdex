@@ -252,7 +252,7 @@ const shareMenuRef = useRef(null);
                   {/* Actions */}
                   <td className="px-2 py-2 flex justify-end space-x-2">
                   <button
-  onClick={() => navigate = `/admin/posts/edit/${post._id}`}
+  onClick={() => navigate (`/admin/posts/edit/${post._id}`)}
   className="p-1 mt-2  text-gray-600 hover:text-black"
 >
   <Pencil size={16} />
@@ -346,7 +346,7 @@ const shareMenuRef = useRef(null);
 </div>
 
                     <button
-  onClick={() => navigate(`/blog/${post.slug}`, "_blank")}
+  onClick={() => navigate(`/blog/${post.slug}`)}
   className="bg-gray-100  hover:bg-gray-200 px-4  rounded-full text-[10px] flex items-center space-x-1"
 >
 

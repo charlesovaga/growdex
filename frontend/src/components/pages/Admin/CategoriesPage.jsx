@@ -24,9 +24,7 @@ export default function CategoriesTable() {
         setLoading(true); // start loader
         try {
           const token = localStorage.getItem("accessToken");
-          const res =await axiosInstance.get(`/categories?page=${page}&limit=${limit}`,
-            { headers: { Authorization: `Bearer ${token}` } }
-          );
+          const res =await axiosInstance.get(`/categories?page=${page}&limit=${limit}` );
       
           setCategories(res.data.categories || []); 
           setPagination({
@@ -83,9 +81,7 @@ export default function CategoriesTable() {
   const handleDelete = async () => {
     try {
       const token = localStorage.getItem("accessToken");
-      await axiosInstance.delete(`/categories/${deleteId}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      await axiosInstance.delete(`/categories/${deleteId}`);
       setCategories(categories.filter((c) => c._id !== deleteId));
     } finally {
       setDeleteId(null);
@@ -129,13 +125,13 @@ export default function CategoriesTable() {
     if (editId) {
       const { data: updated } = await axiosInstance.put(`/categories/${editId}`,
         { name: newCategory.trim() },
-        { headers: { Authorization: `Bearer ${token}` } }
+
       );
       setCategories(categories.map((c) => (c._id === updated._id ? updated : c)));
     } else {
       const { data: added } = await axiosInstance.post(`/categories`,
         { name: newCategory.trim() },
-        { headers: { Authorization: `Bearer ${token}` } }
+   
       );
       setCategories([added, ...categories]);
     }

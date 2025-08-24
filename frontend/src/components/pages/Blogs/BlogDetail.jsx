@@ -65,7 +65,8 @@ const BlogDetail = () => {
     </div>
     <div className="flex flex-wrap gap-1 items-center">
   {post.tags?.map((tag, index) => (
-    <React.Fragment key={tag._id}>
+    <React.Fragment key={tag._id || index}>
+
       <span className="px-2 py-1 text-sm ">{tag.name}</span>
       {index !== post.tags.length - 1 && (
         <span className="text-gray-500 font-bold self-center">•</span>

@@ -111,26 +111,45 @@ const handleAddCategory = async () => {
 
 
 
+// const handleAddTag = async () => {
+//   if (!newTag.trim()) return;
+
+//   try {
+//     const res = await axiosInstance.post("/tags", {
+//       method: "POST",
+//       headers: { "Content-Type": "application/json" },
+//       body: JSON.stringify({ name: newTag.trim() }),
+//     });
+
+//     const added = await res.json();
+//     setTags((prev) => [...prev, added]);  // add to tags list
+//     setSelectedTags((prev) => [...prev, added._id]); // auto-select
+//     setNewTag("");
+//     setShowNewTagInput(false);
+//   } catch (err) {
+//     console.error("Error adding tag:", err);
+//   }
+// };
+
+// inside your AddPost component
 const handleAddTag = async () => {
-  if (!newTag.trim()) return;
+  const trimmed = newTag.trim();
+  if (!trimmed) return;
 
   try {
-    const res = await axiosInstance.post("/tags", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ name: newTag.trim() }),
-    });
+    //  correct axiosInstance usage
+    const res = await axiosInstance.post("/tags", { name: trimmed });
 
-    const added = await res.json();
-    setTags((prev) => [...prev, added]);  // add to tags list
-    setSelectedTags((prev) => [...prev, added._id]); // auto-select
-    setNewTag("");
-    setShowNewTagInput(false);
+    //  axios automatically parses JSON, so use res.data
+    const added = res.data;
+
+    // update local state with new tag
+    setTags((prev) => [...prev, added]);
+    setNewTag(""); // clear input
   } catch (err) {
     console.error("Error adding tag:", err);
   }
 };
-
 
 
 

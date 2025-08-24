@@ -233,7 +233,6 @@ export default function AdminLogin() {
     const res = await axiosInstance.post(
       "/admin/login",
       { email, password },
-      { withCredentials: true }
     );
     
 
