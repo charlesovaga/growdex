@@ -25,7 +25,7 @@ export const getDashboard = async (req, res) => {
 
     const lastPageviews = await Tracking.countDocuments({ eventType: "pageview", createdAt: { $gte: lastFrom, $lt: lastTo } });
     const lastClicks = await Tracking.countDocuments({ eventType: "click", createdAt: { $gte: lastFrom, $lt: lastTo } });
-    // const lastPosts = await Post.countDocuments({ createdAt: { $gte: lastFrom, $lt: lastTo } });
+    const lastPosts = await Post.countDocuments({ createdAt: { $gte: lastFrom, $lt: lastTo } });
     const lastUsers = await User.countDocuments({ createdAt: { $gte: lastFrom, $lt: lastTo } });
 
     const change = (current, prev) => {
@@ -34,12 +34,12 @@ export const getDashboard = async (req, res) => {
       return `${diff >= 0 ? "+" : ""}${diff.toFixed(1)}%`;
     };
 
-    const topPosts = await Post.find({
-      createdAt: { $gte: from, $lt: to },
-    })
-      .sort({ commentsCount: -1 })
-      .limit(3)
-      .select("title createdAt categories commentsCount featuredImage image");
+    // const topPosts = await Post.find({
+    //   createdAt: { $gte: from, $lt: to },
+    // })
+    //   .sort({ commentsCount: -1 })
+    //   .limit(3)
+    //   .select("title createdAt categories commentsCount featuredImage image");
 
     // Aggregate traffic by month by month
     // const trafficDataRaw = await Tracking.aggregate([
@@ -119,7 +119,7 @@ const deviceData = deviceTypes.map(type => {
       trafficData,
       topPosts,
       deviceData,
-      topPosts,
+     
     });
   } catch (error) {
     console.error(error);
