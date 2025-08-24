@@ -131,7 +131,8 @@ export const login = async (req, res) => {
   }
 };
 
-// 🔄 Refresh Admin Access Token
+//  Refresh Admin Access Token
+
 export const refresh = async (req, res) => {
   const token = req.cookies.gid;
   if (!token) return res.status(401).json({ message: "No refresh cookie" });
@@ -148,12 +149,16 @@ export const refresh = async (req, res) => {
       role: admin.role,
     });
 
-    res.json({ accessToken });
+    res.json({
+      accessToken,
+      admin: { id: admin._id, email: admin.email, name: admin.name },
+    });
   } catch (err) {
     console.error("Admin refresh error:", err);
     return res.status(401).json({ message: "Invalid refresh token" });
   }
 };
+
 
 // 🚪 Admin Logout
 export const logout = (req, res) => {
