@@ -231,7 +231,7 @@ export default function AdminLogin() {
     //   { withCredentials: true }
     // );
     const res = await axiosInstance.post(
-      "/api/admin/login",
+      "/admin/login",
       { email, password },
       { withCredentials: true }
     );
@@ -246,18 +246,14 @@ export default function AdminLogin() {
     );
 
     navigate("/admin/dashboard");
-  } catch (err) {
-    console.error("Login error:", err);
-
-    // Show backend message if it exists
-    if (err.response && err.response.data && err.response.data.message) {
-      setError(err.response.data.message);
-    } else {
-      setError("Login failed");
+    } catch (err) {
+      console.error("Login error:", err);
+      setError(
+        err.response?.data?.message || "Login failed. Please try again."
+      );
+    } finally {
+      setLoading(false);
     }
-  } finally {
-    setLoading(false);
-  }
 };
 
 

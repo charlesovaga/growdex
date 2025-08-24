@@ -61,7 +61,7 @@ export default function TagTable() {
       setLoading(true); // start loader
       try {
         const token = localStorage.getItem("accessToken");
-        const res = await axiosInstance.get(`http://localhost:5000/api/tags`, {
+        const res = await axiosInstance.get(`/tags`, {
           params: { page, limit },
           headers: { Authorization: `Bearer ${token}` },
         });
@@ -96,7 +96,7 @@ export default function TagTable() {
   
 
   const handleDelete = async () => {
-    await fetch(`http://localhost:5000/api/tags/${deleteId}`, {
+    await fetch(`/tags/${deleteId}`, {
       method: "DELETE",
     });
     setTags(tags.filter((c) => c._id !== deleteId));
@@ -110,14 +110,14 @@ export default function TagTable() {
   
     if (editId) {
       const { data: updated } = await axiosInstance.put(
-        `http://localhost:5000/api/tags/${editId}`,
+        `/tags/${editId}`,
         { name: newTag.trim() },
         { headers: { Authorization: `Bearer ${token}` } }
       );
       setTags(tags.map((c) => (c._id === updated._id ? updated : c)));
     } else {
       const { data: added } = await axiosInstance.post(
-        `http://localhost:5000/api/tags`,
+        `/tags`,
         { name: newTag.trim() },
         { headers: { Authorization: `Bearer ${token}` } }
       );

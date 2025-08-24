@@ -818,7 +818,7 @@ const AdminPosts = () => {
   const fetchPosts = async () => {
     setLoading(true);
     try {
-      const res = await axiosInstance.get("/api/posts", {
+      const res = await axiosInstance.get("/posts", {
         params: { page, limit, search: debouncedSearch, sortBy },
       });
       setPosts(res.data.posts);
@@ -896,9 +896,9 @@ const AdminPosts = () => {
       const config = { headers: { "Content-Type": "multipart/form-data" } };
   
       if (editingPost) {
-        await axiosInstance.put(`/api/posts/admin/${editingPost._id}`, data, config);
+        await axiosInstance.put(`/posts/admin/${editingPost._id}`, data, config);
       } else {
-        await axiosInstance.post("/api/posts", data, config);
+        await axiosInstance.post("/posts", data, config);
       }
   
       fetchPosts();
@@ -1012,7 +1012,7 @@ const AdminPosts = () => {
                     }}
                     onBlur={async () => {
                       try {
-                        await axiosInstance.put(`/api/posts/admin/${post._id}`, { tags: post.tags.join(",") });
+                        await axiosInstance.put(`/posts/admin/${post._id}`, { tags: post.tags.join(",") });
                       } catch (err) {
                         console.error(err);
                       }
@@ -1032,7 +1032,7 @@ const AdminPosts = () => {
                     }}
                     onBlur={async () => {
                       try {
-                        await axiosInstance.put(`/api/posts/admin/${post._id}`, { popularity: post.popularity });
+                        await axiosInstance.put(`posts/admin/${post._id}`, { popularity: post.popularity });
                       } catch (err) {
                         console.error(err);
                       }
@@ -1044,7 +1044,7 @@ const AdminPosts = () => {
                       const newPop = (post.popularity || 0) + 1;
                       setPosts(posts.map(p => p._id === post._id ? { ...p, popularity: newPop } : p));
                       try {
-                        await axiosInstance.put(`/api/posts/admin/${post._id}`, { popularity: newPop });
+                        await axiosInstance.put(`/posts/admin/${post._id}`, { popularity: newPop });
                       } catch (err) {
                         console.error(err);
                       }
@@ -1053,6 +1053,7 @@ const AdminPosts = () => {
                     +
                   </button>
                 </td>
+              
 
                 <td className="p-2 border">{new Date(post.createdAt).toLocaleDateString()}</td>
 
@@ -1070,6 +1071,8 @@ const AdminPosts = () => {
                     Delete
                   </button>
                 </td>
+
+                
               </tr>
             ))}
           </tbody>
@@ -1136,7 +1139,7 @@ const AdminPosts = () => {
       )}
 
       {/*  Delete Confirmation Modal */}
-      {deleteModal.open && (
+      {/* {deleteModal.open && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
           <div className="bg-white p-6 rounded shadow-md w-80 text-center">
             <h3 className="text-lg font-bold mb-4">Confirm Delete</h3>
@@ -1166,7 +1169,41 @@ const AdminPosts = () => {
             </div>
           </div>
         </div>
+      )} */}
+
+
+      {/* Delete Modal */}
+      {deleteModal.open && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
+          <div className="bg-white p-6 rounded w-1/3">
+            <h2 className="text-lg font-bold mb-4">Delete Post</h2>
+            <p>Are you sure you want to delete "{deleteModal.title}"?</p>
+            <div className="flex gap-2 mt-4">
+              <button
+                className="bg-red-500 text-white px-4 py-2 rounded"
+                onClick={async () => {
+                  try {
+                    await axiosInstance.delete(`/posts/admin/${deleteModal.slug}`);
+                    fetchPosts();
+                    cancelDelete();
+                  } catch (err) {
+                    console.error(err);
+                  }
+                }}
+              >
+                Delete
+              </button>
+              <button
+                className="bg-gray-300 px-4 py-2 rounded"
+                onClick={cancelDelete}
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
       )}
+
     </div>
   );
 };

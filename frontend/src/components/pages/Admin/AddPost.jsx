@@ -18,7 +18,7 @@ const AddPost = () => {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const res = await axiosInstance.get("/api/categories");
+        const res = await axiosInstance.get("/categories");
         
         // normalize result
         const cats = Array.isArray(res.data) ? res.data : res.data.categories || [];
@@ -48,7 +48,7 @@ const [selectedCategories, setSelectedCategories] = useState([]);
   useEffect(() => {
     const fetchTags = async () => {
       try {
-        const res = await axiosInstance.get("/api/tags");
+        const res = await axiosInstance.get("/tags");
   
         // normalize result
         const t = Array.isArray(res.data) ? res.data : res.data.tags || [];
@@ -70,7 +70,7 @@ const [selectedCategories, setSelectedCategories] = useState([]);
   
     const fetchPost = async () => {
       try {
-        const res = await axiosInstance.get(`/api/posts/admin/${id}`);
+        const res = await axiosInstance.get(`/posts/admin/${id}`);
         const post = res.data;
   
         setTitle(post.title || "");
@@ -96,7 +96,7 @@ const handleAddCategory = async () => {
   if (!trimmed) return;
 
   try {
-    const res = await axiosInstance.post("/api/categories", { name: trimmed });
+    const res = await axiosInstance.post("/categories", { name: trimmed });
 
     // Add to state & auto-select
     setCategories((prev) => [...prev, res.data]);
@@ -115,7 +115,7 @@ const handleAddTag = async () => {
   if (!newTag.trim()) return;
 
   try {
-    const res = await axiosInstance.post("/api/tags", {
+    const res = await axiosInstance.post("/tags", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ name: newTag.trim() }),
@@ -159,7 +159,7 @@ const handleToggleTag = async (tagObj) => {
   );
 
   try {
-    await axiosInstance.patch(`/admin/api/posts/${id}/tags`, {
+    await axiosInstance.patch(`/admin/posts/${id}/tags`, {
       tag: tagObj.name || tagObj,
       selected: nextSelected,
     });
@@ -268,7 +268,7 @@ const handleToggleTag = async (tagObj) => {
       let res;
       if (id) {
         // UPDATE post
-        res = await axiosInstance.put(`/api/posts/admin/${id}`,
+        res = await axiosInstance.put(`/posts/admin/${id}`,
           formData,
           { headers: { "Content-Type": "multipart/form-data" } }
         );
@@ -276,7 +276,7 @@ const handleToggleTag = async (tagObj) => {
         navigate("/admin/posts"); //  redirect after update
       } else {
         // CREATE new post
-        res = await axiosInstance.post(`/api/posts/admin`,
+        res = await axiosInstance.post(`/posts/admin`,
           formData,
           { headers: { "Content-Type": "multipart/form-data" } }
         );

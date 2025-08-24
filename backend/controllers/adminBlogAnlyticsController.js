@@ -25,7 +25,7 @@ export const getDashboard = async (req, res) => {
 
     const lastPageviews = await Tracking.countDocuments({ eventType: "pageview", createdAt: { $gte: lastFrom, $lt: lastTo } });
     const lastClicks = await Tracking.countDocuments({ eventType: "click", createdAt: { $gte: lastFrom, $lt: lastTo } });
-    const lastPosts = await Post.countDocuments({ createdAt: { $gte: lastFrom, $lt: lastTo } });
+    // const lastPosts = await Post.countDocuments({ createdAt: { $gte: lastFrom, $lt: lastTo } });
     const lastUsers = await User.countDocuments({ createdAt: { $gte: lastFrom, $lt: lastTo } });
 
     const change = (current, prev) => {

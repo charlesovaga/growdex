@@ -24,7 +24,7 @@ export default function CategoriesTable() {
         setLoading(true); // start loader
         try {
           const token = localStorage.getItem("accessToken");
-          const res =await axiosInstance.get(`/api/categories?page=${page}&limit=${limit}`,
+          const res =await axiosInstance.get(`/categories?page=${page}&limit=${limit}`,
             { headers: { Authorization: `Bearer ${token}` } }
           );
       
@@ -83,7 +83,7 @@ export default function CategoriesTable() {
   const handleDelete = async () => {
     try {
       const token = localStorage.getItem("accessToken");
-      await axiosInstance.delete(`/api/categories/${deleteId}`, {
+      await axiosInstance.delete(`/categories/${deleteId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setCategories(categories.filter((c) => c._id !== deleteId));
@@ -127,13 +127,13 @@ export default function CategoriesTable() {
     const token = localStorage.getItem("accessToken");
   
     if (editId) {
-      const { data: updated } = await axiosInstance.put(`/api/categories/${editId}`,
+      const { data: updated } = await axiosInstance.put(`/categories/${editId}`,
         { name: newCategory.trim() },
         { headers: { Authorization: `Bearer ${token}` } }
       );
       setCategories(categories.map((c) => (c._id === updated._id ? updated : c)));
     } else {
-      const { data: added } = await axiosInstance.post(`/api/categories`,
+      const { data: added } = await axiosInstance.post(`/categories`,
         { name: newCategory.trim() },
         { headers: { Authorization: `Bearer ${token}` } }
       );

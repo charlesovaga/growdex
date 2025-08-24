@@ -414,7 +414,7 @@ const navigate = useNavigate();
 
 const handleLogout = async () => {
   try {
-    await axiosInstance.post("http://localhost:5000/api/admin/logout");
+    await axiosInstance.post("/admin/logout");
   } catch (err) {
     console.error("Logout request failed:", err);
   }
@@ -472,7 +472,7 @@ useEffect(() => {
     const fetchData = async () => {
       try {
         // Fetch dashboard data
-        const dashboardRes = await axiosInstance.get("/api/admin-dashboard/dashboard")
+        const dashboardRes = await axiosInstance.get("/admin-dashboard/dashboard")
         ;
   
         const apiData = dashboardRes.data;
@@ -521,7 +521,7 @@ useEffect(() => {
         // Fetch current admin info
         const token = localStorage.getItem("accessToken");
         console.log("Stored token:", token); 
-        const meRes = await axiosInstance.get("http://localhost:5000/api/admin/me", {
+        const meRes = await axiosInstance.get("/admin/me", {
           headers: {
             Authorization: `Bearer ${token}`,
           },

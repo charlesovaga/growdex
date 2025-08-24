@@ -69,6 +69,11 @@ app.use(express.static(path.join(__dirname, 'frontend/build')));
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'frontend/build', 'index.html'));
 });
+app._router.stack.forEach(r => {
+  if (r.route) {
+    console.log(r.route.path);
+  }
+});
 
 // Server listen
 const PORT = process.env.PORT || 5000;
