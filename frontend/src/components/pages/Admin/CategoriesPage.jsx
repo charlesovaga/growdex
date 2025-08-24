@@ -23,7 +23,7 @@ export default function CategoriesTable() {
       const fetchCategories = async (page = 1, limit = 10) => {
         setLoading(true); // start loader
         try {
-          const token = localStorage.getItem("accessToken");
+
           const res =await axiosInstance.get(`/categories?page=${page}&limit=${limit}` );
       
           setCategories(res.data.categories || []); 
@@ -80,7 +80,7 @@ export default function CategoriesTable() {
 
   const handleDelete = async () => {
     try {
-      const token = localStorage.getItem("accessToken");
+   
       await axiosInstance.delete(`/categories/${deleteId}`);
       setCategories(categories.filter((c) => c._id !== deleteId));
     } finally {
@@ -120,7 +120,7 @@ export default function CategoriesTable() {
   const handleSaveCategory = async () => {
     if (!newCategory.trim()) return;
   
-    const token = localStorage.getItem("accessToken");
+
   
     if (editId) {
       const { data: updated } = await axiosInstance.put(`/categories/${editId}`,

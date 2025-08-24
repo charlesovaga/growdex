@@ -519,8 +519,7 @@ useEffect(() => {
         
   
         // Fetch current admin info
-        const token = localStorage.getItem("accessToken");
-        console.log("Stored token:", token); 
+
         const meRes = await axiosInstance.get("/admin/me", {
           headers: {
             Authorization: `Bearer ${token}`,

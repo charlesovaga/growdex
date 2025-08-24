@@ -104,7 +104,7 @@ export default function TagTable() {
   const handleSaveCategory = async () => {
     if (!newTag.trim()) return;
   
-    const token = localStorage.getItem("accessToken");
+
   
     if (editId) {
       const { data: updated } = await axiosInstance.put(

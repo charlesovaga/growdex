@@ -1,3 +1,51 @@
+// // import React, { useEffect, useState } from "react";
+// // import AppRouter from "./Router.jsx";
+// // import { Toaster } from "react-hot-toast";
+// // import Loader from "./components/loader/Loader.jsx";
+// // import { bootstrapAuth } from "./utils/bootstrapAuth.js";
+
+// // function App() {
+// //   const [loading, setLoading] = useState(true);
+
+// //   useEffect(() => {
+// //     bootstrapAuth().finally(() => {
+// //       console.log("Hiding loader now");
+// //       setLoading(false);
+// //     });
+// //   }, []);
+  
+
+// //   if (loading) return <Loader/>;
+
+// //   return (
+// //     <div>
+// //       <AppRouter />
+
+  
+// //       <Toaster
+// //         position="top-right"
+// //         toastOptions={{
+// //           success: {
+// //             style: {
+// //               background: "#16a34a", // green
+// //               color: "#fff",
+// //             },
+// //           },
+// //           error: {
+// //             style: {
+// //               background: "#dc2626", // red
+// //               color: "#fff",
+// //             },
+// //           },
+// //         }}
+// //       />
+// //     </div>
+// //   );
+// // }
+
+// // export default App;
+
+
 // import React, { useEffect, useState } from "react";
 // import AppRouter from "./Router.jsx";
 // import { Toaster } from "react-hot-toast";
@@ -5,38 +53,25 @@
 // import { bootstrapAuth } from "./utils/bootstrapAuth.js";
 
 // function App() {
-//   const [loading, setLoading] = useState(true);
+//   const [authChecked, setAuthChecked] = useState(false);
 
 //   useEffect(() => {
+//     // run bootstrap in background
 //     bootstrapAuth().finally(() => {
-//       console.log("Hiding loader now");
-//       setLoading(false);
+//       console.log("Auth bootstrap finished");
+//       setAuthChecked(true); // optional: for pages that need auth
 //     });
 //   }, []);
-  
 
-//   if (loading) return <Loader/>;
-
+//   // render app immediately; only show loader if you really need to block auth-required pages
 //   return (
 //     <div>
 //       <AppRouter />
-
-  
 //       <Toaster
 //         position="top-right"
 //         toastOptions={{
-//           success: {
-//             style: {
-//               background: "#16a34a", // green
-//               color: "#fff",
-//             },
-//           },
-//           error: {
-//             style: {
-//               background: "#dc2626", // red
-//               color: "#fff",
-//             },
-//           },
+//           success: { style: { background: "#16a34a", color: "#fff" } },
+//           error: { style: { background: "#dc2626", color: "#fff" } },
 //         }}
 //       />
 //     </div>
@@ -45,25 +80,11 @@
 
 // export default App;
 
-
-import React, { useEffect, useState } from "react";
+import React from "react";
 import AppRouter from "./Router.jsx";
 import { Toaster } from "react-hot-toast";
-import Loader from "./components/loader/Loader.jsx";
-import { bootstrapAuth } from "./utils/bootstrapAuth.js";
 
 function App() {
-  const [authChecked, setAuthChecked] = useState(false);
-
-  useEffect(() => {
-    // run bootstrap in background
-    bootstrapAuth().finally(() => {
-      console.log("Auth bootstrap finished");
-      setAuthChecked(true); // optional: for pages that need auth
-    });
-  }, []);
-
-  // render app immediately; only show loader if you really need to block auth-required pages
   return (
     <div>
       <AppRouter />

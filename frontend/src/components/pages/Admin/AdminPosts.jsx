@@ -859,7 +859,7 @@ const AdminPosts = () => {
       featuredImage: null,
       images: [],
     });
-    setTags(post.tags.map(t => ({ name: t, selected: false })));
+
     setPreviewFeatured(post.featuredImage?.url || null);
     setPreviewImages(post.images?.map((img) => img.url) || []);
     setModalOpen(true);
@@ -1004,7 +1004,8 @@ const AdminPosts = () => {
                 <td className="p-2 border">
                   <input
                     type="text"
-                    value={post.tags.join(", ")}
+                    value={(post.tags || []).join(", ")}
+
                     className="border p-1 rounded w-full"
                     onChange={(e) => {
                       const newTags = e.target.value.split(",").map(t => t.trim());

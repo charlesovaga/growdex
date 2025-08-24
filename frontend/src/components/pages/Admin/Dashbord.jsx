@@ -228,13 +228,14 @@ const icons = {
             {/* Category */}
             {/* Category */}
 <td className="px-4 py-2 text-center">
-  {p.categories && p.categories.length > 0 ? (
-    <span className="px-2 py-1 bg-gray-100 rounded">
-      {p.categories[0]}
-    </span>
-  ) : (
-    <span className="text-gray-400 italic">None</span>
-  )}
+{p.categories && p.categories.length > 0 ? (
+  <span className="px-2 py-1 bg-gray-100 rounded">
+    {p.categories[0].name || p.categories[0]}
+  </span>
+) : (
+  <span className="text-gray-400 italic">None</span>
+)}
+
 </td>
 
 
