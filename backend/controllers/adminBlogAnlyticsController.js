@@ -117,7 +117,7 @@ const deviceData = deviceTypes.map(type => {
         { title: "Clicks", value: clicks, change: change(clicks, lastClicks) },
       ],
       trafficData,
-      topPosts,
+      // topPosts,
       deviceData,
      
     });
