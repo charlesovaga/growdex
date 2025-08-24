@@ -29,8 +29,7 @@ axiosInstance.interceptors.response.use(
 
       try {
         // Refresh token request (cookie will be sent automatically)
-        const res = await axios.post(
-            `${import.meta.env.VITE_API_URL}/api/admin/refresh`,
+        const res = await axiosInstance.post("/admin/refresh",
             {},
             { withCredentials: true }
           );
