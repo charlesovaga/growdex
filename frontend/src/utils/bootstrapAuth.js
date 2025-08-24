@@ -1,5 +1,5 @@
 import store from "../store";
-import { logout } from "../store/slices/authSlice";
+import { logout, setCredentials } from "../store/slices/authSlice";
 import axiosInstance from "./axiosInstance";
 
 export const bootstrapAuth = async () => {

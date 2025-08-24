@@ -65,9 +65,9 @@ export default function CategoriesTable() {
   // Delete confirmation
   const [deleteId, setDeleteId] = useState(null);
 
-  const filtered = categories.filter((c) =>
-    c.name.toLowerCase().includes(search.toLowerCase())
-  );
+   const filtered = categories.filter((c) =>
+       (c?.name || "").toLowerCase().includes(search.toLowerCase())
+     );
 
   // const handleDelete = async () => {
 
