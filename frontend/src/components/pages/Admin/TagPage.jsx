@@ -62,8 +62,7 @@ export default function TagTable() {
       try {
         const token = localStorage.getItem("accessToken");
         const res = await axiosInstance.get(`/tags`, {
-          params: { page, limit },
-          headers: { Authorization: `Bearer ${token}` },
+          params: { page, limit }
         });
     
         const data = res.data;
@@ -109,15 +108,14 @@ export default function TagTable() {
     if (editId) {
       const { data: updated } = await axiosInstance.put(
         `/tags/${editId}`,
-        { name: newTag.trim() },
-        { headers: { Authorization: `Bearer ${token}` } }
+        { name: newTag.trim() }
       );
       setTags(tags.map((c) => (c._id === updated._id ? updated : c)));
     } else {
       const { data: added } = await axiosInstance.post(
         `/tags`,
-        { name: newTag.trim() },
-        { headers: { Authorization: `Bearer ${token}` } }
+        { name: newTag.trim() }
+
       );
       setTags([added, ...tags]);
     }
