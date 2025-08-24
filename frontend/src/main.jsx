@@ -55,7 +55,48 @@
 // init();
 
 
-// src/main.jsx
+// // src/main.jsx
+// import { StrictMode } from "react";
+// import { createRoot } from "react-dom/client";
+// import "./App.css";
+// import { Provider } from "react-redux";
+// import store from "./store";
+// import App from "./App.jsx";
+// import { BrowserRouter } from "react-router-dom";
+// import { bootstrapAuth } from "./utils/bootstrapAuth.js";
+// import Loader from "./components/loader/Loader.jsx";
+
+// const root = createRoot(document.getElementById("root"));
+
+// async function init() {
+//   // Show loader immediately
+//   root.render(
+//     <StrictMode>
+//       <Loader />
+//     </StrictMode>
+//   );
+
+//   try {
+//     await bootstrapAuth(); // fetch user / token restore
+//   } catch (err) {
+//     console.error("Auth bootstrap failed:", err);
+//     // optional: show a toast or fallback UI
+//   } finally {
+//     // ✅ Always render the real app, even if bootstrapAuth fails
+//     root.render(
+//       <StrictMode>
+//         <Provider store={store}>
+//           <BrowserRouter>
+//             <App />
+//           </BrowserRouter>
+//         </Provider>
+//       </StrictMode>
+//     );
+//   }
+// }
+
+// init();
+
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "./App.css";
@@ -64,35 +105,17 @@ import store from "./store";
 import App from "./App.jsx";
 import { BrowserRouter } from "react-router-dom";
 import { bootstrapAuth } from "./utils/bootstrapAuth.js";
-import Loader from "./components/loader/Loader.jsx";
+
+// Bootstrap auth immediately (no loader render here)
+bootstrapAuth();
 
 const root = createRoot(document.getElementById("root"));
-
-async function init() {
-  // Show loader immediately
-  root.render(
-    <StrictMode>
-      <Loader />
-    </StrictMode>
-  );
-
-  try {
-    await bootstrapAuth(); // fetch user / token restore
-  } catch (err) {
-    console.error("Auth bootstrap failed:", err);
-    // optional: show a toast or fallback UI
-  } finally {
-    // ✅ Always render the real app, even if bootstrapAuth fails
-    root.render(
-      <StrictMode>
-        <Provider store={store}>
-          <BrowserRouter>
-            <App />
-          </BrowserRouter>
-        </Provider>
-      </StrictMode>
-    );
-  }
-}
-
-init();
+root.render(
+  <StrictMode>
+    <Provider store={store}>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </Provider>
+  </StrictMode>
+);

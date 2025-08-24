@@ -18,6 +18,7 @@ export const bootstrapAuth = async () => {
     return true;
   } catch (err) {
     console.log("No refresh token, skipping bootstrap.");
+    store.dispatch(setLoading(false)); // still stop loading
     return false;
   }
 };
