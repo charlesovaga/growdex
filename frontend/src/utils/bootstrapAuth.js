@@ -14,10 +14,10 @@ export const bootstrapAuth = async () => {
       admin: res.data.admin, // <-- now we have user info
     }));
 
-    console.log("Token refreshed on app load");
+    console.log("Token refrseshed on app load");
     return true;
   } catch (err) {
-    console.log("No refresh token, skipping bootstrap.");
+    console.log("No refresh toke, skipping bootstrap.");
     store.dispatch(setLoading(false)); // still stop loading
     return false;
   }
