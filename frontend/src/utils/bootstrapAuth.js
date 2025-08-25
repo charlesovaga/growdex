@@ -3,6 +3,7 @@ import { setCredentials, setLoading } from "../store/slices/authSlice";
 import axiosInstance from "./axiosInstance";
 
 export const bootstrapAuth = async () => {
+    store.dispatch(setLoading(true));
   try {
     const res = await axiosInstance.post("/admin/refresh", null, {
       withCredentials: true, // IMPORTANT: send cookie

@@ -109,14 +109,14 @@ export const login = async (req, res) => {
     if (!validPassword) return res.status(401).json({ message: "Invalid credentials" });
 
     // Create tokens
-    const payload = { sub: admin._id, email: admin.email, role: admin.role };
+    const payload = { sub: admin._id, email: admin.email, role: admin.role, name: admin.name };
     const accessToken = signAccess(payload);
-    const refreshToken = signRefresh({ sub: admin._id });
+    const refreshToken = signRefresh({ sub: admin._id, name: admin.name });
 
     // Send refresh token as httpOnly cookie + access token in JSON
     res.cookie("gid", refreshToken, {
       httpOnly: true,
-      sameSite: "lax",
+      sameSite: "none",
       secure: COOKIE_SECURE,    // <-- FIXED
       path: "/",       // <-- FIXED
       maxAge: 7 * 24 * 60 * 60 * 1000,
@@ -147,6 +147,8 @@ export const refresh = async (req, res) => {
       sub: admin._id,
       email: admin.email,
       role: admin.role,
+      name: admin.name,
+      
     });
 
     res.json({

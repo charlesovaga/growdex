@@ -896,7 +896,7 @@ const categoryIds = await Promise.all(
       const post = new Post({
         title: req.body.title,
         body: req.body.body,
-        author: req.body.author,
+        author: req.body.name,
         categories: categoryIds,
         tags: tagIds,
 

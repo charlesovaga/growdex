@@ -53,7 +53,21 @@ const shareMenuRef = useRef(null);
   const handleDelete = async () => {
     try {
       await axiosInstance.delete(`/posts/admin/${deleteId}`);
-      setPosts(posts.filter((p) => p._id !== deleteId));
+      
+      // Remove from UI
+      setPosts((prev) => prev.filter((p) => p._id !== deleteId));
+  
+      // Update pagination.total
+      setPagination((prev) => ({
+        ...prev,
+        total: prev.total - 1,
+      }));
+  
+      // If last item on the page was deleted, go back one page
+      if (posts.length === 1 && pagination.page > 1) {
+        fetchPosts(pagination.page - 1, pagination.limit, search);
+      }
+  
       setDeleteId(null);
       setMessage({ text: "Post deleted successfully!", type: "success" });
     } catch (err) {
@@ -63,6 +77,7 @@ const shareMenuRef = useRef(null);
   
     setTimeout(() => setMessage({ text: "", type: "" }), 3000);
   };
+  
   
 
   useEffect(() => {
