@@ -227,11 +227,10 @@ import Banner from "../../../pages/Landing Page/HeroPage/Banner";
 import Nav from "../../../pages/Landing Page/HeroPage/Nav";
 import profile from "../../../../src/assets/default-avatar.svg"
 import Loader from "../../loader/Loader";
-import { setLoading } from "../../../store/slices/authSlice";
 
 const GrowDexBlog = () => {
   const [posts, setPosts] = useState([]);
-  // const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);

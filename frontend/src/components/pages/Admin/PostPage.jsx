@@ -4,7 +4,6 @@ import { Pencil, Trash2, Share2, Eye, X, Search } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import axiosInstance from "../../../utils/axiosInstance";
 import Loader from "../../loader/Loader";
-import { setLoading } from "../../../store/slices/authSlice";
 
 const PostsPage = () => {
     const [posts, setPosts] = useState([]);
@@ -19,7 +18,7 @@ const shareMenuRef = useRef(null);
     });
     
     const [message, setMessage] = useState({ text: "", type: "" });
-    // const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
     const [deleteId, setDeleteId] = useState(null);
     const [search, setSearch] = useState("");

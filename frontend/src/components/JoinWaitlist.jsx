@@ -116,12 +116,11 @@
 
 import React, { useState } from 'react'
 import axios from 'axios'
-import { setLoading } from '../store/slices/authSlice'
 
 const JoinWaitlist = ({ placeholder = "Enter your email" }) => {
   const [email, setEmail] = useState('')
   const [firstName, setFirstName] = useState('')
-  // const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState('')
   const [error, setError] = useState('')
 

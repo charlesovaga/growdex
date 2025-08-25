@@ -8,7 +8,6 @@ import { useNavigate, useParams } from "react-router-dom";
 import toast from "react-hot-toast"; 
 import { Loader2 } from "lucide-react";
 import axiosInstance from "../../../utils/axiosInstance";
-import { setLoading } from "../../../store/slices/authSlice";
 
 
 const AddPost = () => {
@@ -201,7 +200,7 @@ const handleToggleTag = async (tagObj) => {
   const [body, setBody] = useState("");
   const [featuredImage, setFeaturedImage] = useState(null);
   const [images, setImages] = useState([]);
-  // const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
   const [tagInput, setTagInput] = useState("");
   const [tags, setTags] = useState([]);

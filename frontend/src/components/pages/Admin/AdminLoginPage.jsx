@@ -216,12 +216,13 @@ export default function AdminLogin() {
   // const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const dispatch = useDispatch();
+  const loading = useSelector((state) => state.auth.loading);
   const navigate = useNavigate();
 
 
  const handleSubmit = async (e) => {
   e.preventDefault();
-  setLoading(true);
+  dispatch(setLoading(true));
   setError("");
 
   try {

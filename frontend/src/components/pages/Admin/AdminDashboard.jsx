@@ -378,7 +378,7 @@ import logo from "../../../assets/Frame 12.png"
 import notifications from "../../../assets/admin-comments.png"
 import cross from "../../../assets/dashicons-plus.png"
 import iconHome from "../../../assets/Icon (3).png"
-import { logout as logoutAction, setLoading } from "../../../store/slices/authSlice";
+import { logout as logoutAction } from "../../../store/slices/authSlice";
 
 import { Link, Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import AddPost from "./AddPost";
@@ -403,7 +403,7 @@ const menuItems = [
 
 const Dashboard = () => {
   const [data, setData] = useState(null);
-  // const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(true);
   const [dailyChange, setDailyChange] = useState(0);
   const [collapsed, setCollapsed] = useState(false);
   const [activePage, setActivePage] = useState("Dashboard");
