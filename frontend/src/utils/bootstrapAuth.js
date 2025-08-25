@@ -14,7 +14,7 @@ export const bootstrapAuth = async () => {
       admin: res.data.admin, // <-- now we have user info
     }));
 
-    console.log("Token refrseshed on app load");
+    console.log("Token refreshed on app load");
     return true;
   } catch (err) {
     console.log("No refresh toke, skipping bootstrap.");

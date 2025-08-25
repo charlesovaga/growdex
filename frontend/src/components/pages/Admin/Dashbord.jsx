@@ -50,14 +50,9 @@ const icons = {
         </div> */}
 
         {/* Stats Grid */}
-{/* Stats Grid */}
-<div className="grid grid-cols-4 gap-6 mb-8">
-  {data.stats.map((s, i) => (
-    <div
-      key={i}
-      className="bg-white p-6 rounded-xl shadow flex flex-col gap-3"
-    >
-      {/* Top row: Icon + Title */}
+        <div className="grid grid-cols-4 gap-6 mb-8">
+  {(data?.stats || []).map((s, i) => (
+    <div key={i} className="bg-white p-6 rounded-xl shadow flex flex-col gap-3">
       <div className="flex items-start justify-start gap-2">
         <img
           src={icons[s.title]}
@@ -66,16 +61,10 @@ const icons = {
         />
         <p className="text-gray-500 text-sm">{s.title}</p>
       </div>
-
-      {/* Bottom row: Value + Change */}
       <div className="flex items-start justify-start gap-2">
         <h2 className="text-2xl font-bold">{s.value}</h2>
         {s.change && (
-          <p
-            className={`text-sm ${
-              s.change.startsWith("+") ? "text-green-500" : "text-red-500"
-            }`}
-          >
+          <p className={`text-sm ${s.change.startsWith("+") ? "text-green-500" : "text-red-500"}`}>
             {s.change}
           </p>
         )}
@@ -83,6 +72,7 @@ const icons = {
     </div>
   ))}
 </div>
+
 
 
 
@@ -208,42 +198,33 @@ const icons = {
       </thead>
 
       <tbody>
-        {data.topPosts.map((p, i) => (
-          <tr key={i} className="border-t">
-            {/* Post */}
-            <td className="px-4 py-2 flex items-center gap-3">
-              <img
-                src={p.featuredImage?.url || p.image || "/placeholder.jpg"}
-                alt={p.title}
-                className="w-10 h-10 rounded object-cover"
-              />
-              <span>{p.title}</span>
-            </td>
+  {(data?.topPosts || []).map((p, i) => (
+    <tr key={i} className="border-t">
+      <td className="px-4 py-2 flex items-center gap-3">
+        <img
+          src={p.featuredImage?.url || p.image || "/placeholder.jpg"}
+          alt={p.title}
+          className="w-10 h-10 rounded object-cover"
+        />
+        <span>{p.title}</span>
+      </td>
+      <td className="px-4 py-2 text-center">
+        {p.createdAt ? new Date(p.createdAt).toLocaleDateString() : "-"}
+      </td>
+      <td className="px-4 py-2 text-center">
+        {p.categories?.length > 0 ? (
+          <span className="px-2 py-1 bg-gray-100 rounded">
+            {p.categories[0].name || p.categories[0]}
+          </span>
+        ) : (
+          <span className="text-gray-400 italic">None</span>
+        )}
+      </td>
+      <td className="px-4 py-2 text-center">{p.commentsCount ?? 0}</td>
+    </tr>
+  ))}
+</tbody>
 
-            {/* Date */}
-            <td className="px-4 py-2 text-center">
-              {new Date(p.createdAt).toLocaleDateString()}
-            </td>
-
-            {/* Category */}
-            {/* Category */}
-<td className="px-4 py-2 text-center">
-{p.categories && p.categories.length > 0 ? (
-  <span className="px-2 py-1 bg-gray-100 rounded">
-    {p.categories[0].name || p.categories[0]}
-  </span>
-) : (
-  <span className="text-gray-400 italic">None</span>
-)}
-
-</td>
-
-
-            {/* Comments */}
-            <td className="px-4 py-2 text-center">{p.commentsCount}</td>
-          </tr>
-        ))}
-      </tbody>
     </table>
   </div>
 
@@ -255,8 +236,7 @@ const icons = {
 
   <ResponsiveContainer width="100%" height={170}>
     <PieChart>
-      <Pie
-        data={data.deviceData}
+    <Pie data={data?.deviceData || []} 
         cx="50%"
         cy="50%"
         innerRadius={50}
@@ -266,7 +246,7 @@ const icons = {
         paddingAngle={2}
         dataKey="value"
       >
-        {data.deviceData.map((entry) => {
+     {(data?.deviceData || []).map((entry) => {
   if (entry.name === "mobile") {
     return (
       <Cell
