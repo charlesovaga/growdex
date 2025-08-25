@@ -25,6 +25,7 @@ connectDB();
 // Allowed origins
 const allowedOrigins = [
   'https://growdex.ai', // production
+  'https://growdex.netlify.app',
   "http://localhost:5173"        // development
 ];
 
