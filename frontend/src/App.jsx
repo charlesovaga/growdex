@@ -79,18 +79,12 @@
 // }
 
 // export default App;
-// App.jsx
+
 import React from "react";
 import AppRouter from "./Router.jsx";
 import { Toaster } from "react-hot-toast";
-import { useSelector } from "react-redux";
-import Loader from "./components/loader/Loader.jsx";
 
 function App() {
-  const { loading } = useSelector((state) => state.auth);
-
-  if (loading) return <Loader />; // wait for bootstrapAuth
-
   return (
     <div>
       <AppRouter />
@@ -106,4 +100,3 @@ function App() {
 }
 
 export default App;
-
