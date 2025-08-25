@@ -804,7 +804,7 @@ const AdminPosts = () => {
   //  Delete modal state
   const [deleteModal, setDeleteModal] = useState({
     open: false,
-    slug: null,
+    id: null,
     title: ""
   });
 
