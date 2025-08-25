@@ -772,7 +772,6 @@
 // Moadl for deleting
 
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import axiosInstance from "../../../utils/axiosInstance";
 import Loader from "../../loader/Loader";
 import { setLoading } from "../../../store/slices/authSlice";
@@ -1189,9 +1188,13 @@ const AdminPosts = () => {
                     await fetchPosts();
                     
                   } catch (err) {
-                    console.error(err);
-                  } finally {
-                    cancelDelete();
+                    if (err.response) {
+                      console.error("Delete failed:", err.response.data);
+                    } else if (err.request) {
+                      console.error("No response received:", err.request);
+                    } else {
+                      console.error("Error setting up delete request:", err.message);
+                    }
                   }
                 }}
               >
