@@ -205,7 +205,7 @@ import React, { useState } from "react";
 import { Mail, Lock } from "lucide-react";
 
 import { useDispatch } from "react-redux";
-import { setCredentials } from "../../../store/slices/authSlice";
+import { setCredentials, setLoading } from "../../../store/slices/authSlice";
 import logo from "../../../assets/Frame 1686560934 (1).png";
 import axiosInstance from "../../../utils/axiosInstance";
 import { useNavigate } from "react-router-dom";
@@ -213,7 +213,7 @@ import { useNavigate } from "react-router-dom";
 export default function AdminLogin() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [loading, setLoading] = useState(false);
+  // const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();

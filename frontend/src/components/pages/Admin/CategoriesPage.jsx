@@ -5,10 +5,11 @@ import { Pencil, Trash2, Search, X, Link } from "lucide-react";
 
 import axiosInstance from "../../../utils/axiosInstance";
 import Loader from "../../loader/Loader";
+import { setLoading } from "../../../store/slices/authSlice";
 
 export default function CategoriesTable() {
     const [categories, setCategories] = useState([]);
-    const [loading, setLoading] = useState(true);
+    // const [loading, setLoading] = useState(true);
     const [pagination, setPagination] = useState({
         total: 0,
         page: 1,

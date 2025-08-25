@@ -775,12 +775,13 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import axiosInstance from "../../../utils/axiosInstance";
 import Loader from "../../loader/Loader";
+import { setLoading } from "../../../store/slices/authSlice";
 
 
 
 const AdminPosts = () => {
   const [posts, setPosts] = useState([]);
-  const [loading, setLoading] = useState(true);
+  // const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
   const [limit] = useState(10);
   const [totalPages, setTotalPages] = useState(1);
@@ -926,12 +927,12 @@ const AdminPosts = () => {
 
   // Open delete modal
   const confirmDelete = (id, title) => {
-      setDeleteModal({ open: true, slug: id, title });
+      setDeleteModal({ open: true,  id, title });
     };
 
   // Cancel delete
   const cancelDelete = () => {
-    setDeleteModal({ open: false, slug: null, title: "" });
+    setDeleteModal({ open: false, id: null, title: "" });
   };
 
   return (
@@ -1184,11 +1185,13 @@ const AdminPosts = () => {
                 className="bg-red-500 text-white px-4 py-2 rounded"
                 onClick={async () => {
                   try {
-                    await axiosInstance.delete(`/posts/admin/${deleteModal.slug}`);
-                    fetchPosts();
-                    cancelDelete();
+                    await axiosInstance.delete(`/posts/admin/${deleteModal.id}`);
+                    await fetchPosts();
+                    
                   } catch (err) {
                     console.error(err);
+                  } finally {
+                    cancelDelete();
                   }
                 }}
               >

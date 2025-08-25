@@ -258,11 +258,12 @@ import Eclipse5 from "../../../assets/Ellipse 22.png"
 import arrowVector from "../../../assets/Vector (8).png"
 import { useState } from "react"
 import axios from "axios"
+import { setLoading } from "../../../store/slices/authSlice"
 
 export default function HeroSection({ placeholder = "Enter your email" }) {
   const [email, setEmail] = useState("")
   const [firstName, setFirstName] = useState("")
-  const [loading, setLoading] = useState(false)
+  // const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState("")
   const [error, setError] = useState("")
 
