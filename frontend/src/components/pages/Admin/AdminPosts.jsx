@@ -1184,9 +1184,11 @@ const AdminPosts = () => {
                 className="bg-red-500 text-white px-4 py-2 rounded"
                 onClick={async () => {
                   try {
+                    console.log("Deleting post id:", deleteModal.id);
+
                     await axiosInstance.delete(`/posts/admin/${deleteModal.id}`);
                     await fetchPosts();
-                    
+                    cancelDelete();
                   } catch (err) {
                     if (err.response) {
                       console.error("Delete failed:", err.response.data);
