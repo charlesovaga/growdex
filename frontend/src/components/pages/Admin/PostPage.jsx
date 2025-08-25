@@ -52,7 +52,7 @@ const shareMenuRef = useRef(null);
   
   const handleDelete = async () => {
     try {
-      await axiosInstance.delete(`/posts/${deleteId}`);
+      await axiosInstance.delete(`/posts/admin/${deleteId}`);
       setPosts(posts.filter((p) => p._id !== deleteId));
       setDeleteId(null);
       setMessage({ text: "Post deleted successfully!", type: "success" });
