@@ -213,7 +213,7 @@ const handleToggleTag = async (tagObj) => {
 
 
 
- 
+  const { admin } = useSelector((state) => state.auth);
 
 
   // const handlePublish = async (e) => {
@@ -328,7 +328,7 @@ const handleToggleTag = async (tagObj) => {
       const formData = new FormData();
       formData.append("title", title);
       formData.append("body", body);
-      formData.append("author", "Admin");
+      formData.append("author", "Emma");
       formData.append("categories", JSON.stringify(selectedCategories));
       formData.append("tags", JSON.stringify(selectedTags));
   

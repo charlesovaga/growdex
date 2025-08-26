@@ -245,6 +245,10 @@ export default function AdminLogin() {
       })
     );
 
+        // Store in localStorage if needed
+        localStorage.setItem("accessToken", res.data.accessToken);
+        localStorage.setItem("adminData", JSON.stringify(res.data.admin));
+
     navigate("/admin/dashboard");
     } catch (err) {
       console.error("Login error:", err);

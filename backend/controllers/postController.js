@@ -688,6 +688,8 @@ import mongoose from "mongoose";
 import Category from "../models/category.js";
 import Tag from "../models/tag.js";
 import slugify from "slugify";
+import post from "../models/post.js";
+import User from "../models/User.js";
 
 
 
@@ -695,7 +697,7 @@ import slugify from "slugify";
 const validatePost = (data) => {
   const errors = [];
   if (!data.title || data.title.trim() === "") errors.push("Title is required");
-  if (!data.author || data.author.trim() === "") errors.push("Author is required");
+  // if (!data.author || data.author.trim() === "") errors.push("Author is required");
   if (!data.body || data.body.trim() === "") errors.push("Body content is required");
   return errors;
 };
@@ -736,6 +738,7 @@ export const getPosts = async (req, res) => {
 
     const posts = await Post.find(filter)
     .populate("categories", "name slug").populate("tags", "name slug")
+    .populate("author", "name avatar role")
       .sort(sortOption)
       .skip((page - 1) * limit)
       .limit(limit);
@@ -760,7 +763,8 @@ export const getPost = async (req, res) => {
         { slug: req.params.slug },
         { $inc: { popularity: 1 } }, // increment popularity
         { new: true } // return the updated document
-      ).populate("categories", "name slug").populate("tags", "name slug");;
+      ).populate("categories", "name slug").populate("tags", "name slug") 
+      .populate("author", "name avatar role") ;
   
       if (!post) return res.status(404).json({ message: "Post not found" });
   
@@ -779,7 +783,8 @@ export const getPostById = async (req, res) => {
   try {
     const post = await Post.findById(req.params.id)
       .populate("categories", "name slug")
-      .populate("tags", "name slug");
+      .populate("tags", "name slug")
+      .populate("author", "name avatar role")
       
     if (!post) return res.status(404).json({ message: "Post not found" });
 
@@ -893,23 +898,25 @@ const categoryIds = await Promise.all(
         }
       }
 
-  
-      const post = new Post({
-        title: req.body.title,
-        body: req.body.body,
-        author: req.body.name,
-        categories: categoryIds,
-        tags: tagIds,
-
-        slug,
-        featuredImage: featuredImageObj,
-        images: imagesArray,
-      });
-
+     // **Fetch real user document**
+     const user = await User.findById(req.user._id);
+     if (!user) return res.status(404).json({ message: "User not found" });
+ 
+     const post = new Post({
+       title: req.body.title,
+       body: req.body.body,
+       author: user._id,                // use real user
+       profileImage: user.profileImage || null, // use real profile image
+       categories: categoryIds,
+       tags: tagIds,
+       slug,
+       featuredImage: featuredImageObj,
+       images: imagesArray,
+     });
   
       await post.save();
 
-      const populatedPost = await Post.findById(post._id).populate("categories", "name slug").populate("tags", "name slug");
+      const populatedPost = await Post.findById(post._id).populate("categories", "name slug").populate("author", "name avatar role");
       ;
   
       console.log("Saved post doc:", populatedPost.toObject());
@@ -1029,14 +1036,25 @@ const categoryIds = await Promise.all(
       
       const post = await Post.findById(req.params.id);
       if (!post) return res.status(404).json({ message: "Post not found" });
-  
+
+
       // Validate if key fields are updated
       if (req.body.title || req.body.author || req.body.body) {
-        const errors = validatePost({ ...post.toObject(), ...req.body });
+        const errors = validatePost(req.body);
         if (errors.length) return res.status(400).json({ message: errors.join(", ") });
+        
       }
   
+
       const updatedData = { ...req.body };
+
+      // **Fetch real user document if author not provided**
+      if (!req.body.author) {
+        const user = await User.findById(req.user._id);
+        if (!user) return res.status(404).json({ message: "User not found" });
+        updatedData.author = user._id;
+        updatedData.profileImage = user.profileImage || null;
+      }
   
       // --- Slug handling ---
       if (req.body.slug && req.body.slug !== post.slug) {
@@ -1169,7 +1187,8 @@ updatedData.images = currentImages;
       // --- Save update ---
       const updatedPost = await Post.findByIdAndUpdate(req.params.id, updatedData, { new: true })
         .populate("categories", "name slug")
-        .populate("tags", "name slug");
+        .populate("tags", "name slug").populate("author", "name avatar role")
+        ;
   
       res.json(updatedPost);
     } catch (err) {
@@ -1264,6 +1283,7 @@ export const deletePostById = async (req, res) => {
       const posts = await Post.find({})
         .populate("categories", "name slug")
         .populate("tags", "name slug")
+        .populate("author", "name avatar role")
         .sort({ createdAt: -1 })
         .skip((page - 1) * limit)
         .limit(limit);
@@ -1305,7 +1325,8 @@ export const toggleTagOnPost = async (req, res) => {
 
     const post = await Post.findByIdAndUpdate(id, update, { new: true })
       .populate("categories", "name slug")
-      .populate("tags", "name slug");
+      .populate("tags", "name slug")
+      .populate("author", "name avatar role")
 
     if (!post) return res.status(404).json({ message: "Post not found" });
 
@@ -1331,5 +1352,28 @@ export const uploadImage = async (req, res) => {
   } catch (err) {
     console.error("Upload error:", err);
     return res.status(500).json({ message: "Image upload failed" });
+  }
+};
+
+export const updateProfile = async (req, res) => {
+  try {
+    const updates = {};
+    if (req.body.name) updates.name = req.body.name;
+
+    if (req.file) {
+      const result = await cloudinary.uploader.upload(req.file.path, {
+        folder: "user_profiles",
+      });
+      updates.profileImage = result.secure_url;
+    }
+
+    const user = await User.findByIdAndUpdate(req.user._id, updates, { new: true })
+      .select("-password"); 
+
+    if (!user) return res.status(404).json({ message: "User not found" });
+
+    res.json(user);
+  } catch (err) {
+    res.status(500).json({ message: "Profile update failed" });
   }
 };

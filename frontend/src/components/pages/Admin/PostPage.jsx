@@ -34,6 +34,8 @@ const shareMenuRef = useRef(null);
         `/posts?page=${page}&limit=${limit}&search=${searchQuery}`
       );
       setPosts(res.data.posts || []);
+      console.log(res.data.posts);
+
       setPagination({
         total: res.data.total,
         page: res.data.page,
@@ -242,22 +244,23 @@ const shareMenuRef = useRef(null);
 
     {/* Avatar + Author */}
     <div className="flex items-center">
-      <img
-        src={
-          post.featuredImage?.url ||
-          post.image ||
-          "/src/assets/default-avatar.svg"
-        }
-        alt={post.title}
-        className="w-9 h-9 rounded-full border border-gray-300"
-      />
-      <div className="ml-2">
-        <p className="font-medium">{post.author}</p>
-        <span className="text-gray-500 text-xs">
-          {post.author === "Joy Amuche" ? "Admin" : "Contributor"}
-        </span>
-      </div>
+    <img
+  src={
+    post.author?.profileImage || "/src/assets/default-avatar.svg"
+  }
+  alt={post.author?.name || "Emma"}
+  className="w-9 h-9 rounded-full border border-gray-300"
+/>
+<div className="ml-2">
+  <p className="font-medium">{post.author?.name || "Emma"}</p>
+  <span className="text-gray-500 text-xs">
+    {post.author?.role === "admin" ? "Admin" : "Contributor"}
+  </span>
+</div>
+
     </div>
+
+
   </div>
 </td>
 

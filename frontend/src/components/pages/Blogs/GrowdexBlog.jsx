@@ -240,6 +240,7 @@ const fetchPosts = async (pageNumber = 1) => {
   setLoading(true);
   try {
     const res = await axiosInstance.get(`/posts/public?page=${pageNumber}&limit=14`);
+    console.log("Posts API response:", res.data);
     const data = res.data.posts || [];
 
     if (pageNumber === 1) {
@@ -270,6 +271,7 @@ const fetchPosts = async (pageNumber = 1) => {
   }
 };
 
+const a0 = posts[0]?.author;
 
   useEffect(() => {
     fetchPosts(1); // fetch first page on mount
@@ -314,15 +316,15 @@ const fetchPosts = async (pageNumber = 1) => {
                   </div>
                   <h2 className="text-2xl sm:text-3xl font-bold mb-4 leading-relaxed">{posts[0].title}</h2>
                   <div className="flex justify-between items-center text-sm text-gray-600">
-                    <div className="flex items-center gap-2">
-                      <img
-                        src={posts[0].authorImage || profile}
-                        onError={(e) => { e.currentTarget.onerror = null; e.currentTarget.src = profile; }}
-                        alt={posts[0].author || "Author"}
-                        className="w-6 h-6 rounded-full border border-gray-300 bg-white object-cover"
-                      />
-                      <span>By {posts[0].author}</span>
-                    </div>
+                  <div className="flex items-center gap-2">
+  <img
+    src={a0?.profileImage || profile}
+    onError={(e) => { e.currentTarget.onerror = null; e.currentTarget.src = profile; }}
+    alt={a0?.name || "Author"}
+    className="w-6 h-6 rounded-full border border-gray-300 bg-white object-cover"
+  />
+  <span>By {a0?.name || "Admin"}</span>
+</div>
                     <span>{new Date(posts[0].createdAt).toLocaleDateString()}</span>
                   </div>
                 </div>
@@ -331,48 +333,67 @@ const fetchPosts = async (pageNumber = 1) => {
 
             {/* Grid posts */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-  {gridPosts.map((post) => (
-    <Link key={post._id} to={`/blog/${post.slug}`} className="rounded p-4 shadow-xs hover:shadow-lg transition relative"
-        onClick={async () => {
-    try {
-      await axiosInstance.post("/track/click", {
-        page: `/blog/${post.slug}`,
-        deviceType: /Mobi|Android/i.test(navigator.userAgent) ? "mobile" : "web",
-      });
-    } catch (err) {
-      console.error("Error tracking click", err);
-    }
-  }}>
-                  {post.featuredImage?.url && (
-                    <div className="w-full aspect-[3/2]">
-                      <img src={post.featuredImage.url} alt={post.title} className="w-full h-full object-cover object-top rounded-t-lg" />
-                    </div>
-                  )}
-                  <div className="flex justify-between items-start mb-3 mt-4">
-                    <div className="flex gap-2 flex-wrap justify-center">
-                      {post.categories?.map((cat) => (
-                        <span key={cat._id} className="bg-gray-100 px-6 py-1 rounded text-sm text-black">{cat.name}</span>
-                      ))}
-                    </div>
-                    <div className="text-sm">
-                      {post.tags?.length > 0 && <span>{post.tags.map(tag => tag.name).join(" · ")}</span>}
-                    </div>
-                  </div>
-                  <h2 className="text-2xl mt-4 mb-2">{post.title}</h2>
-                  <div className="flex justify-between items-center text-sm text-gray-600 mt-2">
-                    <div className="flex items-center gap-2">
-                      <img
-                        src={post.authorImage || profile}
-                        onError={(e) => { e.currentTarget.onerror = null; e.currentTarget.src = profile; }}
-                        alt={post.author || "Author"}
-                        className="w-6 h-6 rounded-full border border-gray-300 bg-white object-cover"
-                      />
-                      <span>By {post.author}</span>
-                    </div>
-                    <span>{new Date(post.createdAt).toLocaleDateString()}</span>
-                  </div>
-                </Link>
-              ))}
+            {gridPosts.map((post) => {
+  const a = post?.author;   // ✅ now post is in scope
+
+  return (
+    <Link 
+      key={post._id} 
+      to={`/blog/${post.slug}`} 
+      className="rounded p-4 shadow-xs hover:shadow-lg transition relative"
+      onClick={async () => {
+        try {
+          await axiosInstance.post("/track/click", {
+            page: `/blog/${post.slug}`,
+            deviceType: /Mobi|Android/i.test(navigator.userAgent) ? "mobile" : "web",
+          });
+        } catch (err) {
+          console.error("Error tracking click", err);
+        }
+      }}
+    >
+      {post.featuredImage?.url && (
+        <div className="w-full aspect-[3/2]">
+          <img
+            src={post.featuredImage.url}
+            alt={post.title}
+            className="w-full h-full object-cover object-top rounded-t-lg"
+          />
+        </div>
+      )}
+
+      {/* Categories + Tags */}
+      <div className="flex justify-between items-start mb-3 mt-4">
+        <div className="flex gap-2 flex-wrap justify-center">
+          {post.categories?.map((cat) => (
+            <span key={cat._id} className="bg-gray-100 px-6 py-1 rounded text-sm text-black">{cat.name}</span>
+          ))}
+        </div>
+        <div className="text-sm">
+          {post.tags?.length > 0 && <span>{post.tags.map(tag => tag.name).join(" · ")}</span>}
+        </div>
+      </div>
+
+      {/* Title */}
+      <h2 className="text-2xl mt-4 mb-2">{post.title}</h2>
+
+      {/* Author + Date */}
+      <div className="flex justify-between items-center text-sm text-gray-600 mt-2">
+        <div className="flex items-center gap-2">
+          <img
+            src={a?.profileImage || profile}
+            onError={(e) => { e.currentTarget.onerror = null; e.currentTarget.src = profile; }}
+            alt={a?.name || "Author"}
+            className="w-6 h-6 rounded-full border border-gray-300 bg-white object-cover"
+          />
+          <span>By {a?.name || "Admin"}</span>
+        </div>
+        <span>{new Date(post.createdAt).toLocaleDateString()}</span>
+      </div>
+    </Link>
+  );
+})}
+
             </div>
 
             {/* Load More button */}

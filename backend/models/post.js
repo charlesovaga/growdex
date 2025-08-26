@@ -83,10 +83,14 @@ const postSchema = new mongoose.Schema(
       required: [true, "Please add content"],
     },
     author: {
-      type: String,
-      required: [true, "Author name is required"],
-      default: "Admin",   //  default value
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User", // <-- reference User model
+      required: true,
     },
+    // profileImage: {
+    //   type: String,
+    //   default: null, // optional author image
+    // },
     tags: [
       {
         type: mongoose.Schema.Types.ObjectId,

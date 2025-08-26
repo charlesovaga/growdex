@@ -28,11 +28,11 @@ axiosInstance.interceptors.response.use(
       originalRequest._retry = true;
 
       try {
-        // 👇 use axios (NOT axiosInstance) for refresh to avoid recursion
+        // use axios (NOT axiosInstance) for refresh to avoid recursion
         const res = await axios.post(
           `${import.meta.env.VITE_API_URL}/api/admin/refresh`,
-          {},
-          { withCredentials: true }
+          {}, // empty body
+          { withCredentials: true }  // config object
         );
 
         const newToken = res.data.accessToken;
