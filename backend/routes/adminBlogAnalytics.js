@@ -42,10 +42,13 @@
 
 import express from "express";
 import { getDashboard } from "../controllers/adminBlogAnlyticsController.js";
+import { requireAdminAuth } from "../middleware/adminBlogMiddleware.js";
+import { updateProfilePic } from "../controllers/postController.js";
 
 const router = express.Router();
 
 // Route only defines endpoint, controller handles logic
 router.get("/dashboard", getDashboard);
+router.post("/admin/profile/upload", requireAdminAuth, upload.single("file"), updateProfilePic);
 
 export default router;

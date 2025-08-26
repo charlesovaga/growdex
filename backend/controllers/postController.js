@@ -684,6 +684,7 @@
 import Post from "../models/post.js";
 import cloudinary from "../config/cloudinary.js";
 import mongoose from "mongoose";
+
 import Category from "../models/category.js";
 import Tag from "../models/tag.js";
 import slugify from "slugify";
@@ -1311,5 +1312,23 @@ export const toggleTagOnPost = async (req, res) => {
     res.json({ tags: post.tags });
   } catch (err) {
     return res.status(400).json({ message: "Invalid post id" });
+  }
+};
+
+
+export const uploadImage = async (req, res) => {
+  try {
+    if (!req.file) {
+      return res.status(400).json({ message: "No file uploaded" });
+    }
+
+    const result = await cloudinary.uploader.upload(req.file.path, {
+      folder: "blog_inline_images", // keep separate from featured images
+    });
+
+    return res.json({ url: result.secure_url }); 
+  } catch (err) {
+    console.error("Upload error:", err);
+    return res.status(500).json({ message: "Image upload failed" });
   }
 };

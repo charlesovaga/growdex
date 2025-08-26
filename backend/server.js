@@ -18,6 +18,7 @@ import adminBlogRoutes from "./routes/adminBlogAnalytics.js";
 import trackRoutes from "./routes/adminBlogTrack.js";
 import categoryRoutes from "./routes/categoryRoutes.js";
 import tagRoutes from "./routes/tagRoutes.js";
+import uploadRoutes from "./routes/upload.js";
 
 const app = express();
 connectDB();
@@ -57,6 +58,7 @@ app.use("/api/admin-dashboard", adminBlogRoutes);
 app.use("/api/track", trackRoutes);
 app.use("/api/categories", categoryRoutes);
 app.use("/api/tags", tagRoutes);
+app.use("/api/upload", uploadRoutes);
 // Test route
 app.get('/', (req, res) => res.send('Growdex API is running'));
 

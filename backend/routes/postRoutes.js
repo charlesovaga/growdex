@@ -84,6 +84,7 @@ router.delete("/admin/:id", requireAdminAuth, deletePostById);
 router.get("/admin/:id", requireAdminAuth, getPostById);
 router.patch("/admin/:id/tags", requireAdminAuth, toggleTagOnPost);
 
+
 // Public routes after
 router.get("/public", getPublicPosts);
 router.get("/", getPosts);
