@@ -17,6 +17,7 @@ module.exports = {
           "scroll-left": "scrollLeft 30s linear infinite",
           "scroll-right": "scrollRight 30s linear infinite",
         },
+        
       },
     },
     plugins: [],

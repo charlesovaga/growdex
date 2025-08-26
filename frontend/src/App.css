@@ -282,3 +282,10 @@ input[type="number"] {
 /* .italic-block {
   @apply italic bg-gray-100 p-4 rounded-lg text-center text-lg my-4;
 } */
+.blog-body a {
+  @apply text-blue-700 underline;
+}
+
+.blog-body a:hover {
+  @apply text-blue-800;
+}

@@ -104,10 +104,9 @@ const BlogDetail = () => {
 
   {/* Post Body */}
   <div
-    dangerouslySetInnerHTML={{ __html: post.body }}
-    className="prose mb-4 text-justify md:text-justify"
-    style={{ textAlign: 'justify' }}
-  />
+  className="blog-body prose mb-4 text-justify md:text-justify"
+  dangerouslySetInnerHTML={{ __html: post.body }}
+/>
 </div>
 
     <Banner/>

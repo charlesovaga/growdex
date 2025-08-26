@@ -1317,6 +1317,7 @@ export const toggleTagOnPost = async (req, res) => {
 
 
 export const uploadImage = async (req, res) => {
+  console.log("Incoming file:", req.file);
   try {
     if (!req.file) {
       return res.status(400).json({ message: "No file uploaded" });

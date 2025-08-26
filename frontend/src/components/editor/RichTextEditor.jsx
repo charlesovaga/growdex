@@ -128,9 +128,7 @@ function RichTextEditor({ value, onChange }) {
           headers: { "Content-Type": "multipart/form-data" },
         });
 
-        const imageUrl = res.data.url;
-        editor.insertEmbed(range.index, "image", imageUrl);
-
+        const imageUrl = res.data.url; // assuming response contains the image URL in 'url' field
         const editor = quillRef.current.getEditor();
         const range = editor.getSelection();
         if (range) {
@@ -190,35 +188,41 @@ function RichTextEditor({ value, onChange }) {
         placeholder="Write a detailed description here..."
         className="bg-transparent text-white rounded-md"
       />
+<style>
+{`
+  .ql-toolbar  {
+    background-color: #F0F0F1 !important;
+    border: none !important;
+  }
+  .ql-container {
+    border: none !important;
+  }
+  .ql-snow {
+    border: none !important;
+  }
+  .ql-editor {
+    min-height: 200px;
+    color: black; /* text color */
+  }
+  .ql-editor.ql-blank::before {
+    color: #aaa !important;
+  }
+  .ql-picker,
+  .ql-picker-options,
+  .ql-picker-item,
+  .ql-stroke {
+    color: black !important;
+    stroke: black !important;
+  }
 
-      <style>
-        {`
-        .ql-toolbar  {
-          background-color: #F0F0F1 !important;
-          border: none !important;
-        }
-        .ql-container {
-          border: none !important;
-        }
-        .ql-snow {
-          border: none !important;
-        }
-        .ql-editor {
-          min-height: 200px;
-          color: black;
-        }
-        .ql-editor.ql-blank::before {
-          color: #aaa !important;
-        }
-        .ql-picker,
-        .ql-picker-options,
-        .ql-picker-item,
-        .ql-stroke {
-          color: black !important;
-          stroke: black !important;
-        }
-        `}
-      </style>
+  /* fix link color */
+  .ql-editor a {
+    color: #1d4ed8;
+    text-decoration: underline;
+  }
+`}
+</style>
+
     </div>
   );
 }

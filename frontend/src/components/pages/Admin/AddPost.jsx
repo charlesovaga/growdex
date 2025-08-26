@@ -263,6 +263,62 @@ const handleToggleTag = async (tagObj) => {
   // };
 
 
+  // const handlePublish = async (e) => {
+  //   e.preventDefault();
+  //   setLoading(true);
+  //   setMessage("");
+  
+  //   try {
+  //     const formData = new FormData();
+  //     formData.append("title", title);
+  //     formData.append("body", body);
+  //     formData.append("author", "Admin");
+  //     formData.append("categories", JSON.stringify(selectedCategories));
+  //     formData.append("tags", JSON.stringify(selectedTags));
+  
+  //     if (featuredImage && typeof featuredImage !== "string") {
+  //       formData.append("featuredImage", featuredImage);
+  //     }
+  
+  //     images.forEach((img) => {
+  //       formData.append("images", img);
+  //     });
+  
+  //     let res;
+  //     if (id) {
+  //       // UPDATE post
+  //       res = await axiosInstance.put(`/posts/admin/${id}`,
+  //         formData,
+  //         { headers: { "Content-Type": "multipart/form-data" } }
+  //       );
+  //       toast.success("Post updated successfully!");
+  //       navigate("/admin/posts"); //  redirect after update
+  //     } else {
+  //       // CREATE new post
+  //       res = await axiosInstance.post(`/posts/admin`,
+  //         formData,
+  //         { headers: { "Content-Type": "multipart/form-data" } }
+  //       );
+  //       toast.success(" Post published successfully!");
+  //     }
+  
+  //     // Reset only if new post
+  //     if (!id) {
+  //       setTitle("");
+  //       setBody("");
+  //       setFeaturedImage(null);
+  //       setImages([]);
+  //       setSelectedCategories([]);
+  //       setTags([]);
+  //     }
+  
+  //   } catch (err) {
+  //     toast.error(" Error: " + (err.response?.data?.message || err.message));
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
+  
   const handlePublish = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -287,20 +343,22 @@ const handleToggleTag = async (tagObj) => {
       let res;
       if (id) {
         // UPDATE post
-        res = await axiosInstance.put(`/posts/admin/${id}`,
-          formData,
-          { headers: { "Content-Type": "multipart/form-data" } }
-        );
+        res = await axiosInstance.put(`/posts/admin/${id}`, formData, {
+          headers: { "Content-Type": "multipart/form-data" },
+        });
         toast.success("Post updated successfully!");
-        navigate("/admin/posts"); //  redirect after update
+        navigate("/admin/posts");
       } else {
         // CREATE new post
-        res = await axiosInstance.post(`/posts/admin`,
-          formData,
-          { headers: { "Content-Type": "multipart/form-data" } }
-        );
-        toast.success(" Post published successfully!");
+        res = await axiosInstance.post(`/posts/admin`, formData, {
+          headers: { "Content-Type": "multipart/form-data" },
+        });
+        toast.success("Post published successfully!");
       }
+  
+      // Ensure the slug is stored for Preview and other links
+      const returnedSlug = res.data.slug;
+      if (returnedSlug) setPostSlug(returnedSlug);
   
       // Reset only if new post
       if (!id) {
@@ -311,9 +369,8 @@ const handleToggleTag = async (tagObj) => {
         setSelectedCategories([]);
         setTags([]);
       }
-  
     } catch (err) {
-      toast.error(" Error: " + (err.response?.data?.message || err.message));
+      toast.error("Error: " + (err.response?.data?.message || err.message));
     } finally {
       setLoading(false);
     }
