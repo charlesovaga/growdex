@@ -1047,9 +1047,13 @@ const categoryIds = await Promise.all(
   
       const updatedData = { ...req.body };
       if (!req.body.author) {
-        updatedData.author = req.user._id;
-        updatedData.profileImage = req.user.profileImage || null;
+        const user = await User.findById(req.user.sub);
+        if (user) {
+          updatedData.author = user._id;
+          updatedData.profileImage = user.profileImage || null;
+        }
       }
+      
   
       // --- Slug handling ---
       if (req.body.slug && req.body.slug !== post.slug) {
@@ -1362,7 +1366,8 @@ export const updateProfile = async (req, res) => {
       updates.profileImage = result.secure_url;
     }
 
-    const user = await User.findByIdAndUpdate(req.user._id, updates, { new: true })
+    const user = await User.findByIdAndUpdate(req.user.sub, updates, { new: true })
+
       .select("-password"); 
 
     if (!user) return res.status(404).json({ message: "User not found" });
