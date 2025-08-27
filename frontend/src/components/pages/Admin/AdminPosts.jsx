@@ -872,17 +872,17 @@ const AdminPosts = () => {
     if (
       !formData.title.trim() ||
       !formData.body.trim() ||
-      !formData.author.trim() ||
+      // !formData.author.trim() ||
       !formData.slug.trim()
     ) {
-      alert("Please fill in all required fields: Title, Author, Body, Slug");
+      alert("Please fill in all required fields: Title,  Body, Slug");
       return;
     }
   
     try {
       const data = new FormData();
       data.append("title", formData.title?.trim() || "");
-      data.append("author", currentAdmin.id); 
+      // data.append("author", currentAdmin.id); 
       data.append("body", formData.body?.trim() || "");
       data.append("tags", formData.tags?.trim() || "");
       data.append("slug", formData.slug?.trim() || "");
@@ -906,7 +906,7 @@ const AdminPosts = () => {
       setEditingPost(null);
       setFormData({
         title: "",
-        author: "",
+        // author: "",
         body: "",
         tags: "",
         slug: "",
