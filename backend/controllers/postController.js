@@ -898,21 +898,20 @@ const categoryIds = await Promise.all(
         }
       }
 
-     // **Fetch real user document**
-     const user = await User.findById(req.user._id);
-     if (!user) return res.status(404).json({ message: "User not found" });
- 
-     const post = new Post({
-       title: req.body.title,
-       body: req.body.body,
-       author: user._id,                // use real user
-       profileImage: user.profileImage || null, // use real profile image
-       categories: categoryIds,
-       tags: tagIds,
-       slug,
-       featuredImage: featuredImageObj,
-       images: imagesArray,
-     });
+  
+      const post = new Post({
+        title: req.body.title,
+        body: req.body.body,
+        author: req.user._id,
+        profileImage: req.user.profileImage || null,
+        categories: categoryIds,
+        tags: tagIds,
+
+        slug,
+        featuredImage: featuredImageObj,
+        images: imagesArray,
+      });
+
   
       await post.save();
 
@@ -1045,15 +1044,10 @@ const categoryIds = await Promise.all(
         
       }
   
-
       const updatedData = { ...req.body };
-
-      // **Fetch real user document if author not provided**
       if (!req.body.author) {
-        const user = await User.findById(req.user._id);
-        if (!user) return res.status(404).json({ message: "User not found" });
-        updatedData.author = user._id;
-        updatedData.profileImage = user.profileImage || null;
+        updatedData.author = req.user._id;
+        updatedData.profileImage = req.user.profileImage || null;
       }
   
       // --- Slug handling ---
