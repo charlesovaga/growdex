@@ -905,7 +905,7 @@ const categoryIds = await Promise.all(
     const post = new Post({
       title: req.body.title,
       body: req.body.body,
-      author: req.user._id,               // use real user
+      author: req.user.sub,              // use real user
       profileImage: user.profileImage || null, // use real profile image
       categories: categoryIds,
       tags: tagIds,
