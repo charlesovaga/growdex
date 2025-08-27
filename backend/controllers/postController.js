@@ -899,13 +899,13 @@ const categoryIds = await Promise.all(
       }
 
      // **Fetch real user document**
-    const user = await User.findById(req.user._id);
+    const user = await User.findById(req.user.sub);
     if (!user) return res.status(404).json({ message: "User not found" });
 
     const post = new Post({
       title: req.body.title,
       body: req.body.body,
-      author: user._id,                // use real user
+      author: req.user._id,               // use real user
       profileImage: user.profileImage || null, // use real profile image
       categories: categoryIds,
       tags: tagIds,
