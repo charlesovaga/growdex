@@ -882,7 +882,7 @@ const AdminPosts = () => {
     try {
       const data = new FormData();
       data.append("title", formData.title?.trim() || "");
-      data.append("author", formData.author?.trim() || "");
+      // data.append("author", formData.author?.trim() || "");
       data.append("body", formData.body?.trim() || "");
       data.append("tags", formData.tags?.trim() || "");
       data.append("slug", formData.slug?.trim() || "");
@@ -1094,7 +1094,7 @@ const AdminPosts = () => {
             <h2 className="text-xl font-bold mb-4">{editingPost ? "Edit Post" : "Create Post"}</h2>
             <form onSubmit={handleSubmit} className="flex flex-col gap-3">
               <input name="title" placeholder="Title" value={formData.title} onChange={handleChange} className="border p-2 rounded"/>
-              <input name="author" placeholder="Author" value={formData.author} onChange={handleChange} className="border p-2 rounded"/>
+              {/* <input name="author" placeholder="Author" value={formData.author} onChange={handleChange} className="border p-2 rounded"/> */}
               <textarea name="body" placeholder="Body" value={formData.body} onChange={handleChange} className="border p-2 rounded"/>
               <input name="tags" placeholder="Tags (comma separated)" value={formData.tags} onChange={handleChange} className="border p-2 rounded"/>
               <input name="slug" placeholder="Slug" value={formData.slug} onChange={handleChange} className="border p-2 rounded"/>
