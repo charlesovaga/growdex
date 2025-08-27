@@ -109,9 +109,19 @@ export const login = async (req, res) => {
     if (!validPassword) return res.status(401).json({ message: "Invalid credentials" });
 
     // Create tokens
-    const payload = { sub: admin._id, email: admin.email, role: admin.role, name: admin.name };
-    const accessToken = signAccess(payload);
-    const refreshToken = signRefresh({ sub: admin._id, name: admin.name });
+// Create tokens
+const payload = { 
+  sub: admin._id, 
+  email: admin.email, 
+  role: admin.role, 
+  name: admin.name 
+};
+
+const accessToken = signAccess(payload);
+const refreshToken = signRefresh(payload); 
+
+    // const accessToken = signAccess(payload);
+    // const refreshToken = signRefresh({ sub: admin._id, name: admin.name });
 
     // Send refresh token as httpOnly cookie + access token in JSON
     res.cookie("gid", refreshToken, {
