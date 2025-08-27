@@ -88,6 +88,7 @@ import jwt from "jsonwebtoken";
 import User from "../models/User.js";
 import { signAccess, signRefresh } from "../utils/jwt.js";
 import { COOKIE_SECURE, JWT_REFRESH_SECRET } from "../config.js";
+import cloudinary from "../config/cloudinary.js";
 
 
 
@@ -207,7 +208,7 @@ export const updateProfileImage = async (req, res) => {
 
     const user = await User.findByIdAndUpdate(
       req.user.sub, 
-      { avatar: upload.secure_url },   // 👈 fix here
+      { avatar: upload.secure_url },   // fix here
       { new: true }
     );
 
