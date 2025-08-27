@@ -69,9 +69,11 @@ import {
   toggleTagOnPost,
   deletePostById,
   updatePostById,
-  getPostById
+  getPostById,
+ 
 } from "../controllers/postController.js";
 import { requireAdminAuth } from "../middleware/adminBlogMiddleware.js";
+
 
 const router = express.Router();
 
@@ -83,6 +85,7 @@ router.put("/admin/:id", requireAdminAuth, uploadPostImages, updatePostById);
 router.delete("/admin/:id", requireAdminAuth, deletePostById);
 router.get("/admin/:id", requireAdminAuth, getPostById);
 router.patch("/admin/:id/tags", requireAdminAuth, toggleTagOnPost);
+
 
 
 // Public routes after

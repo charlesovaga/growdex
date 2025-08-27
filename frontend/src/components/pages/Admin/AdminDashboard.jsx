@@ -563,6 +563,24 @@ useEffect(() => {
 //     if (yesterday === 0) return 0; // avoid divide by zero
 //     return (((today - yesterday) / yesterday) * 100).toFixed(1);
 //   })();
+const handleImageChange = async (e) => {
+  const file = e.target.files[0];
+  if (!file) return;
+
+  const formData = new FormData();
+  formData.append("image", file);
+
+  try {
+    const res = await axiosInstance.post("/admin/profile/image", formData, {
+      headers: { "Content-Type": "multipart/form-data" },
+      withCredentials: true,
+    });
+    setAdmin((prev) => ({ ...prev, avatar: res.data.avatar }));
+
+  } catch (err) {
+    console.error("Image upload failed:", err);
+  }
+};
 
   return (
 <div className="flex bg-[#F0F0F1] min-h-screen">
@@ -679,20 +697,30 @@ useEffect(() => {
 
       </div>
 
-     <div className="flex items-center gap-2 text-sm">
+      <div className="flex items-center gap-2 text-sm">
+  <label className="relative cursor-pointer">
   <img
-    src={admin?.profilePic || "/src/assets/default-avatar.svg"}
-    onError={(e) => {
-      e.target.onerror = null;
-      e.target.src = "/src/assets/default-avatar.svg";
-    }}
-    alt="Profile"
-    className="w-8 h-8 rounded-full border border-gray-300 bg-white object-cover"
-  />
+  src={admin?.avatar || "/src/assets/default-avatar.svg"}
+  onError={(e) => {
+    e.currentTarget.onerror = null;
+    e.currentTarget.src = "/src/assets/default-avatar.svg";
+  }}
+  alt="Profile"
+  className="w-8 h-8 rounded-full border border-gray-300 bg-white object-cover"
+/>
+
+    <input 
+      type="file" 
+      accept="image/*" 
+      onChange={handleImageChange} 
+      className="hidden" 
+    />
+  </label>
   <span>
     Hello, <span className="font-semibold">{admin?.name || "..."} </span>
   </span>
 </div>
+
 
 
     </div>

@@ -196,3 +196,24 @@ export const getMe = async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 };
+
+export const updateProfileImage = async (req, res) => {
+  try {
+    if (!req.file) return res.status(400).json({ message: "No image uploaded" });
+
+    const upload = await cloudinary.uploader.upload(req.file.path, {
+      folder: "admin-profiles",
+    });
+
+    const user = await User.findByIdAndUpdate(
+      req.user.sub, 
+      { avatar: upload.secure_url },   // 👈 fix here
+      { new: true }
+    );
+
+    res.json({ message: "Profile image updated", avatar: user.avatar });
+  } catch (err) {
+    console.error("Upload error:", err);
+    res.status(500).json({ message: "Error uploading profile image" });
+  }
+};
