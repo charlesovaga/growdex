@@ -864,7 +864,7 @@ const AdminPosts = () => {
     setPreviewImages(post.images?.map((img) => img.url) || []);
     setModalOpen(true);
   };
-
+  const currentAdmin = useSelector(state => state.auth.admin);
   // Submit form (create or update)
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -882,7 +882,7 @@ const AdminPosts = () => {
     try {
       const data = new FormData();
       data.append("title", formData.title?.trim() || "");
-      // data.append("author", formData.author?.trim() || "");
+      data.append("author", currentAdmin.id); 
       data.append("body", formData.body?.trim() || "");
       data.append("tags", formData.tags?.trim() || "");
       data.append("slug", formData.slug?.trim() || "");
