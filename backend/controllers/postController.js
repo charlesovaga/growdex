@@ -1362,7 +1362,7 @@ export const updateProfile = async (req, res) => {
       const result = await cloudinary.uploader.upload(req.file.path, {
         folder: "user_profiles",
       });
-      updates.profileImage = result.secure_url;
+    updates.avatar = result.secure_url;
     }
 
     const user = await User.findByIdAndUpdate(req.user.sub, updates, { new: true })
