@@ -84,9 +84,17 @@ const BlogDetail = () => {
 
 {/* Author & Date */}
 <p className="text-gray-600 mb-4 flex items-center gap-2">
-  <span className="material-icons text-gray-400">person</span>
-  {post.author?.name || "Admin"} | {new Date(post.createdAt).toLocaleDateString()}
+  <img
+    src={post.author?.avatar || profile}
+    onError={(e) => { e.currentTarget.onerror = null; e.currentTarget.src = profile; }}
+    alt={post.author?.name || "Author"}
+    className="w-8 h-8 rounded-full border border-gray-300 bg-white object-cover"
+  />
+  <span>{post.author?.name || "Admin"}</span>
+  <span className="text-gray-400">|</span>
+  <span>{new Date(post.createdAt).toLocaleDateString()}</span>
 </p>
+
 
 {/* Featured Image */}
 <div className="w-full aspect-[3/2] mb-4">
