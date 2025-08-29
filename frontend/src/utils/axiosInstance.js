@@ -38,8 +38,12 @@ axiosInstance.interceptors.response.use(
         const newToken = res.data.accessToken;
 
         // Update Redux store
-        store.dispatch(setCredentials({ token: newToken }));
-
+          store.dispatch(
+          setCredentials({
+            token: newToken,
+            admin: res.data.admin ?? store.getState().auth.admin,
+          })
+        );
         // Retry original request with new token
         originalRequest.headers["Authorization"] = `Bearer ${newToken}`;
         return axiosInstance(originalRequest);

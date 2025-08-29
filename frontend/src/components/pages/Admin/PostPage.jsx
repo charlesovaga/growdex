@@ -245,9 +245,7 @@ const shareMenuRef = useRef(null);
     {/* Avatar + Author */}
     <div className="flex items-center">
     <img
-  src={
-    post.author?.profileImage || "/src/assets/default-avatar.svg"
-  }
+  src={post.author?.avatar || "/src/assets/default-avatar.svg"}
   alt={post.author?.name || "Emma"}
   className="w-9 h-9 rounded-full border border-gray-300"
 />

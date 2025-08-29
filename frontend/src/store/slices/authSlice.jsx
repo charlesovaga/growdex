@@ -76,7 +76,12 @@ const authSlice = createSlice({
       state.token = action.payload.token;
       state.admin = action.payload.admin || state.admin;
       state.loading = false;
+    
+      //  persist to localStorage
+      localStorage.setItem("accessToken", action.payload.token);
+      localStorage.setItem("adminData", JSON.stringify(state.admin));
     },
+    
     setLoading: (state, action) => {
       state.loading = action.payload;
     },
@@ -84,7 +89,12 @@ const authSlice = createSlice({
       state.token = null;
       state.admin = null;
       state.loading = false;
+    
+      //  clear storage
+      localStorage.removeItem("accessToken");
+      localStorage.removeItem("adminData");
     },
+    
   },
 });
 

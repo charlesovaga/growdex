@@ -115,7 +115,8 @@ const payload = {
   sub: admin._id, 
   email: admin.email, 
   role: admin.role, 
-  name: admin.name 
+  name: admin.name ,
+  avatar: admin.avatar , 
 };
 
 const accessToken = signAccess(payload);
@@ -133,7 +134,7 @@ const refreshToken = signRefresh(payload);
       maxAge: 7 * 24 * 60 * 60 * 1000,
     }).json({
       accessToken,
-      admin: { id: admin._id, email: admin.email, name: admin.name },
+      admin: { id: admin._id, email: admin.email, name: admin.name, avatar: admin.avatar || null },
     });
     
   } catch (err) {
@@ -159,12 +160,13 @@ export const refresh = async (req, res) => {
       email: admin.email,
       role: admin.role,
       name: admin.name,
+      avatar: admin.avatar
       
     });
 
     res.json({
       accessToken,
-      admin: { id: admin._id, email: admin.email, name: admin.name },
+      admin: { id: admin._id, email: admin.email, name: admin.name, avatar: admin.avatar || null },
     });
   } catch (err) {
     console.error("Admin refresh error:", err);
@@ -191,28 +193,66 @@ export const getMe = async (req, res) => {
     const admin = await User.findOne({ _id: req.user.sub, role: "admin" }).select("-password");
     if (!admin) return res.status(404).json({ message: "Admin not found" });
 
-    res.json({ id: admin._id, email: admin.email, name: admin.name });
+    res.json({ id: admin._id, email: admin.email, name: admin.name, avatar: admin.avatar || null });
   } catch (err) {
     console.error("Admin getMe error:", err);
     res.status(500).json({ message: "Server error" });
   }
 };
 
+// export const updateProfileImage = async (req, res) => {
+//   try {
+//     if (!req.file) return res.status(400).json({ message: "No image uploaded" });
+
+//     const upload = await cloudinary.uploader.upload(req.file.path, {
+//       folder: "admin-profiles",
+//     });
+
+//     const user = await User.findByIdAndUpdate(
+//       req.user.sub, 
+//       { avatar: upload.secure_url },   // fix here
+//       { new: true }
+//     );
+
+//     res.json({ message: "Profile image updated", avatar: user.avatar });
+//   } catch (err) {
+//     console.error("Upload error:", err);
+//     res.status(500).json({ message: "Error uploading profile image" });
+//   }
+// };
+
 export const updateProfileImage = async (req, res) => {
   try {
-    if (!req.file) return res.status(400).json({ message: "No image uploaded" });
+    if (!req.file) {
+      return res.status(400).json({ message: "No image uploaded" });
+    }
 
+    // upload to cloudinary
     const upload = await cloudinary.uploader.upload(req.file.path, {
       folder: "admin-profiles",
     });
 
-    const user = await User.findByIdAndUpdate(
-      req.user.sub, 
-      { avatar: upload.secure_url },   // fix here
+    // update user in DB
+    const admin = await User.findByIdAndUpdate(
+      req.user.sub,
+      { avatar: upload.secure_url },
       { new: true }
-    );
+    ).select("-password"); // remove password from returned object
 
-    res.json({ message: "Profile image updated", avatar: user.avatar });
+    if (!admin) {
+      return res.status(404).json({ message: "Admin not found" });
+    }
+
+    // send back full updated admin info
+    res.json({
+      message: "Profile image updated",
+      admin: {
+        id: admin._id,
+        email: admin.email,
+        name: admin.name,
+        avatar: admin.avatar || null,
+      },
+    });
   } catch (err) {
     console.error("Upload error:", err);
     res.status(500).json({ message: "Error uploading profile image" });

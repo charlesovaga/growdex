@@ -378,14 +378,14 @@ import logo from "../../../assets/Frame 12.png"
 import notifications from "../../../assets/admin-comments.png"
 import cross from "../../../assets/dashicons-plus.png"
 import iconHome from "../../../assets/Icon (3).png"
-import { logout as logoutAction } from "../../../store/slices/authSlice";
+import { logout as logoutAction, setCredentials } from "../../../store/slices/authSlice";
 
 import { Link, Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import AddPost from "./AddPost";
 import { ArrowLeft } from "lucide-react";
 import axiosInstance from "../../../utils/axiosInstance";
 import Loader from "../../loader/Loader";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 
 const menuItems = [
@@ -402,15 +402,18 @@ const menuItems = [
   
 
 const Dashboard = () => {
+  const { admin } = useSelector((state) => state.auth);
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [dailyChange, setDailyChange] = useState(0);
   const [collapsed, setCollapsed] = useState(false);
   const [activePage, setActivePage] = useState("Dashboard");
-  const [admin, setAdmin] = useState(null);
+  // const [admin, setAdmin] = useState(null);
   const location = useLocation(); 
   const dispatch = useDispatch();
 const navigate = useNavigate();
+const { admin: currentAdmin } = useSelector((state) => state.auth);
+
 
 const handleLogout = async () => {
   try {
@@ -421,6 +424,7 @@ const handleLogout = async () => {
   dispatch(logoutAction());  // clear Redux
   navigate("/login");        // redirect
 };
+
 
 
 //   useEffect(() => {
@@ -524,8 +528,11 @@ useEffect(() => {
           withCredentials: true
         });
         
-  
-        setAdmin(meRes.data); // { id, email, name }
+        dispatch(setCredentials({
+          token: localStorage.getItem("accessToken"),
+          admin: meRes.data, // { id, email, name, avatar }
+        }));
+         // { id, email, name }
   
         setLoading(false);
       } catch (err) {
@@ -563,6 +570,37 @@ useEffect(() => {
 //     if (yesterday === 0) return 0; // avoid divide by zero
 //     return (((today - yesterday) / yesterday) * 100).toFixed(1);
 //   })();
+
+// const handleImageChange = async (e) => {
+//   const file = e.target.files[0];
+//   if (!file) return;
+
+//   const formData = new FormData();
+//   formData.append("image", file);
+
+//   try {
+//     const res = await axiosInstance.post("/admin/profile/image", formData, {
+//       headers: { "Content-Type": "multipart/form-data" },
+//       withCredentials: true,
+//     });
+
+//     console.log("Upload response:", res.data);
+
+//     // update admin in Redux with serializable value
+//     dispatch(setCredentials({
+//       token: localStorage.getItem("accessToken"),
+//       admin: {
+//         ...currentAdmin,
+//         avatar: res.data.admin.avatar || currentAdmin.avatar,
+//       },
+//     }));
+
+//   } catch (err) {
+//     console.error("Image upload failed:", err);
+//   }
+// };
+
+
 const handleImageChange = async (e) => {
   const file = e.target.files[0];
   if (!file) return;
@@ -573,14 +611,18 @@ const handleImageChange = async (e) => {
   try {
     const res = await axiosInstance.post("/admin/profile/image", formData, {
       headers: { "Content-Type": "multipart/form-data" },
-      withCredentials: true,
     });
-    setAdmin((prev) => ({ ...prev, avatar: res.data.avatar }));
 
+    // Update Redux with the new avatar
+    dispatch(setCredentials({
+      token: localStorage.getItem("accessToken"),
+      admin: res.data.admin, // <-- use admin object from API
+    }));
   } catch (err) {
-    console.error("Image upload failed:", err);
+    console.error("Error uploading image:", err);
   }
 };
+
 
   return (
 <div className="flex bg-[#F0F0F1] min-h-screen">
@@ -699,6 +741,7 @@ const handleImageChange = async (e) => {
 
       <div className="flex items-center gap-2 text-sm">
   <label className="relative cursor-pointer">
+    
   <img
   src={admin?.avatar || "/src/assets/default-avatar.svg"}
   onError={(e) => {
