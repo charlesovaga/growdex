@@ -116,11 +116,11 @@ const payload = {
   email: admin.email, 
   role: admin.role, 
   name: admin.name ,
-  avatar: admin.avatar , 
+  avatar: admin.avatar || null 
 };
 
 const accessToken = signAccess(payload);
-const refreshToken = signRefresh(payload); 
+    const refreshToken = signRefresh({ sub: admin._id.toString(), role: admin.role }); 
 
     // const accessToken = signAccess(payload);
     // const refreshToken = signRefresh({ sub: admin._id, name: admin.name });
@@ -134,7 +134,7 @@ const refreshToken = signRefresh(payload);
       maxAge: 7 * 24 * 60 * 60 * 1000,
     }).json({
       accessToken,
-      admin: { id: admin._id, email: admin.email, name: admin.name, avatar: admin.avatar || null },
+      admin: payload,
     });
     
   } catch (err) {
@@ -155,19 +155,18 @@ export const refresh = async (req, res) => {
     const admin = await User.findOne({ _id: decoded.sub, role: "admin" });
     if (!admin) return res.status(401).json({ message: "Admin not found" });
 
-    const accessToken = signAccess({
-      sub: admin._id,
+const payload = { 
+      sub: admin._id.toString(),
       email: admin.email,
       role: admin.role,
       name: admin.name,
-      avatar: admin.avatar
-      
-    });
+      avatar: admin.avatar || null 
+    };
 
-    res.json({
-      accessToken,
-      admin: { id: admin._id, email: admin.email, name: admin.name, avatar: admin.avatar || null },
-    });
+    const accessToken = signAccess(payload);
+
+
+      res.json({ accessToken, admin: payload });
   } catch (err) {
     console.error("Admin refresh error:", err);
     return res.status(401).json({ message: "Invalid refresh token" });
