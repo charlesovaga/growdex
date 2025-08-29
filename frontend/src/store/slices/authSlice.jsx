@@ -72,15 +72,16 @@ const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    setCredentials: (state, action) => {
-      state.token = action.payload.token;
-      state.admin = action.payload.admin || state.admin;
-      state.loading = false;
-    
-      //  persist to localStorage
-      localStorage.setItem("accessToken", action.payload.token);
-      localStorage.setItem("adminData", JSON.stringify(state.admin));
-    },
+ setCredentials: (state, action) => {
+  state.token = action.payload.token;
+  state.admin = action.payload.admin;
+  state.loading = false;
+
+  // ✅ persist fresh values
+  localStorage.setItem("accessToken", action.payload.token);
+  localStorage.setItem("adminData", JSON.stringify(action.payload.admin));
+},
+
     
     setLoading: (state, action) => {
       state.loading = action.payload;
