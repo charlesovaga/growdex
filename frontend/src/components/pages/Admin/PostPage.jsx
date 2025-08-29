@@ -302,7 +302,7 @@ const shareMenuRef = useRef(null);
         onClick={() => handleCopy(post)}
         className="block w-full text-left px-3 py-1 text-sm hover:bg-gray-100"
       >
-        📋 Copy Link
+        Copy Link
       </button>
       <button
         onClick={() =>
@@ -314,7 +314,7 @@ const shareMenuRef = useRef(null);
         }
         className="block w-full text-left px-3 py-1 text-sm hover:bg-gray-100"
       >
-        🐦 Share on Twitter
+        Share on Twitter
       </button>
       <button
         onClick={() =>
@@ -326,7 +326,7 @@ const shareMenuRef = useRef(null);
         }
         className="block w-full text-left px-3 py-1 text-sm hover:bg-gray-100"
       >
-        📘 Share on Facebook
+        Share on Facebook
       </button>
       <button
   onClick={() =>
@@ -338,7 +338,7 @@ const shareMenuRef = useRef(null);
   }
   className="block w-full text-left px-3 py-1 text-sm hover:bg-gray-100"
 >
-  💼 Share on LinkedIn
+  Share on LinkedIn
 </button>
 
       <button
@@ -355,7 +355,7 @@ const shareMenuRef = useRef(null);
         }
         className="block w-full text-left px-3 py-1 text-sm hover:bg-gray-100"
       >
-        💬 Share on WhatsApp
+        Share on WhatsApp
       </button>
       <button
         onClick={() =>
@@ -369,7 +369,7 @@ const shareMenuRef = useRef(null);
         }
         className="block w-full text-left px-3 py-1 text-sm hover:bg-gray-100"
       >
-        📧 Share via Email
+        Share via Email
       </button>
     </div>
   )}
