@@ -191,7 +191,7 @@ const shareMenuRef = useRef(null);
 ) : (!posts || posts.length === 0) ? (
   <p className="text-gray-500 text-center py-10">No posts available.</p>
 ) : (
-        <div className="bg-white rounded-lg shadow overflow-hidden">
+        <div className="bg-white rounded-lg shadow">
           <table className="w-full text-left border-collapse">
           <thead className="bg-gray-50 text-gray-600 text-sm">
   <tr>
@@ -284,9 +284,10 @@ const shareMenuRef = useRef(null);
                   {/* Share button with dropdown */}
 <div className="relative">
   <button
-    onClick={() =>
+    onClick={() =>{
+          console.log("Clicked share for", post._id)
       setSharePostId(sharePostId === post._id ? null : post._id)
-    }
+    }}
     className="p-1 mt-2 text-gray-600 hover:text-black"
   >
     <Share2 size={16} />
@@ -295,7 +296,7 @@ const shareMenuRef = useRef(null);
   {sharePostId === post._id && (
     <div
       ref={shareMenuRef}
-      className="absolute right-0 mt-2 bg-white border rounded shadow-md p-2 z-10 w-44"
+      className="absolute right-0 mt-2 bg-white border rounded shadow-md p-2 z-50 w-44"
     >
       <button
         onClick={() => handleCopy(post)}
