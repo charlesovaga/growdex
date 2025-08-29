@@ -329,6 +329,19 @@ const shareMenuRef = useRef(null);
         📘 Share on Facebook
       </button>
       <button
+  onClick={() =>
+    handleShareClick(
+      `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(
+        window.location.origin + "/blog/" + post.slug
+      )}`
+    )
+  }
+  className="block w-full text-left px-3 py-1 text-sm hover:bg-gray-100"
+>
+  💼 Share on LinkedIn
+</button>
+
+      <button
         onClick={() =>
           handleShareClick(
             `https://wa.me/?text=${encodeURIComponent(
