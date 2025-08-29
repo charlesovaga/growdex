@@ -82,15 +82,14 @@ const BlogDetail = () => {
   {/* Title */}
   <h1 className="text-4xl font-bold mb-2">{post.title}</h1>
 
-  {/* Author & Date */}
-  <p className="text-gray-600 mb-4 flex items-center gap-2">
-    <span className="material-icons text-gray-400">person</span>
-    {post.author} | {new Date(post.createdAt).toLocaleDateString()}
-  </p>
+{/* Author & Date */}
+<p className="text-gray-600 mb-4 flex items-center gap-2">
+  <span className="material-icons text-gray-400">person</span>
+  {post.author?.name || "Admin"} | {new Date(post.createdAt).toLocaleDateString()}
+</p>
 
-  {/* Featured Image */}
-  
-  <div className="w-full aspect-[3/2] mb-4">
+{/* Featured Image */}
+<div className="w-full aspect-[3/2] mb-4">
   {post.featuredImage?.url && (
     <img
       src={post.featuredImage.url}
@@ -99,6 +98,7 @@ const BlogDetail = () => {
     />
   )}
 </div>
+
 
 
 

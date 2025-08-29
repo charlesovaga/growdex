@@ -250,7 +250,7 @@ const fetchPosts = async (pageNumber = 1) => {
       // slice for grid and round down to multiple of 3
       const gridData = data.slice(1);
       const multipleOf3 = gridData.length - (gridData.length % 3);
-      setGridPosts(gridData.slice(0, multipleOf3));
+ setGridPosts(data.slice(1));
     } else {
       // append new posts, but keep multiples of 3 for grid
       const combined = [...gridPosts, ...data];
